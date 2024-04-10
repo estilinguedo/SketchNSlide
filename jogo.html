@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/dia.css" id="tema">
+    <script src="./js/muda_tema.js"></script>
+</head>
+<body>
+    <main>
+        <button id="config" class="icon"></button>
+        <nav id="botoestopo">
+            <button id="lapis" class="icon"></button>
+            <button id="linha" class="icon"></button>
+            <button id="borracha" class="icon"></button>
+            <button id="cursor" class="icon"></button>
+            <button id="mover" class="icon"></button>
+        </nav>
+        <nav id="botoescor">
+            <button id="corazul" class="icon"></button>
+            <button id="corvermelho" class="icon"></button>
+            <button id="corverde" class="icon"></button>
+        </nav>
+        <button id="btn-tema" onclick="desliza_slider()"><span id="slider"></span></button>
+        <canvas id="canvasjogo"></canvas>
+        <nav id="botoestempo">
+            <button id="play" class="icon"></button>
+            <button id="pause" class="icon"></button>
+            <button id="stop" class="icon"></button>
+        </nav>
+    </main>
+    <script src="./js/jogo.js"></script>
+</body>
+</html>
