@@ -1,3 +1,3 @@
 # SketchNSlide
-![logo do sketch 'n slide](img/sketch_n_slide.png)
+![logo do sketch 'n slide](img/logo_upscale.png)
 Jogo código aberto feito como um projeto escolar
