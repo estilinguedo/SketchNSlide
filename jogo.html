@@ -4,33 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sketch 'n Slide</title>
+
+    <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/dia.css" id="tema">
+
     <script src="./js/muda_tema.js"></script>
+    <script src="./js/jogo.js"></script>
 </head>
-<body>
+<body onload="inicializa_canvas()">
     <main>
         <button id="config" class="icon"></button>
-        <nav id="botoestopo">
+        <nav id="botoes-topo">
             <button id="lapis" class="icon"></button>
             <button id="linha" class="icon"></button>
             <button id="borracha" class="icon"></button>
             <button id="cursor" class="icon"></button>
             <button id="mover" class="icon"></button>
         </nav>
-        <nav id="botoescor">
-            <button id="corazul" class="icon"></button>
-            <button id="corvermelho" class="icon"></button>
-            <button id="corverde" class="icon"></button>
+        <nav id="botoes-cor">
+            <button id="cor-azul" class="icon"></button>
+            <button id="cor-vermelho" class="icon"></button>
+            <button id="cor-verde" class="icon"></button>
         </nav>
         <button id="btn-tema" onclick="desliza_slider()"><span id="slider"></span></button>
-        <canvas id="canvasjogo"></canvas>
-        <nav id="botoestempo">
+        <canvas id="canvas-jogo"></canvas>
+        <nav id="botoes-tempo">
             <button id="play" class="icon"></button>
             <button id="pause" class="icon"></button>
             <button id="stop" class="icon"></button>
         </nav>
     </main>
-    <script src="./js/jogo.js"></script>
 </body>
 </html>

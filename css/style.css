@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Noto Sans", sans-serif;
+}
+
+main {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: hsl(216, 29%, 96%);
+}
+
+#btn-tema {
+    width: 60px;
+    height: 22px;
+
+    border-radius: 34px;
+
+    position: fixed;
+    top: 2vh;
+    right: 2vw;
+
+    display: flex;
+    align-items: center;
+}
+
+#btn-tema:hover {
+    cursor: pointer;
+}
+
+#slider {
+    display: block;
+    width: 20px;
+    height: 20px;
+
+    border-radius: 34px;
+    
+    position: relative;
+    left: 0%;
+
+    background-image: url("../img/tema_claro.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+
+    transition: left 0.5s, background-image 0.5s;
+}
+
+#logo {
+    image-rendering: pixelated;
+    width: 50vw;
+    height: 4/9*100vh;
+}
+
+p {
+    width: 50vw;
+
+    font-size: max(1vw, 1rem);
+    font-weight: 500;
+    text-align: justify;
+}
+
+main > a {
+    width: 15vw;
+    height: 10vh;
+
+    font-size: 2vw;
+    text-decoration: none;
+    font-weight: 900;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: solid 1vh;
+    border-radius: 1vh;
+}
+
+#config {
+    position: fixed;
+    top: 7px;
+    left: 7px;
+}
+
+#botoes-topo {
+    position: fixed;
+    border: none;
+    top: 7px;
+}
+
+#botoes-topo:hover {
+    cursor: pointer;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+    
+    border: none;
+}
+
+.icon:hover {
+    cursor: pointer;
+}
+
+#botoes-cor {
+    position: fixed;
+    border: none;
+    top: 44px;
+}
+
+#botoes-cor * {
+    border-radius: 50%;
+}
+
+#botoes-cor *:hover {
+    filter: brightness(130%);
+    transition: 2s;
+    transition-timing-function: ease-in-out;
+}
+
+#botoes-tempo {
+    position: fixed;
+    border: none;
+    bottom: 7px;
+}
+
+#cor-azul {
+    background-color: #3a55db;
+}
+
+#cor-vermelho {
+    background-color: #e44056;
+}
+
+#cor-verde {
+    background-color: #34c56c;
+}
+
+#cor-azul:hover {
+    box-shadow: 0 0 50px 8px #3a55db;
+}
+
+#cor-vermelho:hover {
+    box-shadow: 0 0 50px 8px #e44056;
+}
+
+#cor-verde:hover {
+    box-shadow: 0 0 50px 8px #34c56c;
+}
