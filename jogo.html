@@ -23,23 +23,26 @@
     <button id="config" class="icon" onclick="mostra_opcoes()"></button>
     <main>
         <nav id="botoes-topo">
-            <button id="lapis" class="icon"></button>
-            <button id="linha" class="icon"></button>
-            <button id="borracha" class="icon"></button>
-            <button id="cursor" class="icon"></button>
-            <button id="mover" class="icon"></button>
+            <button id="lapis" class="icon" onclick="troca_ferramenta('lapis'); atualiza_ferramenta()"></button>
+            <button id="linha" class="icon" onclick="troca_ferramenta('linha'); atualiza_ferramenta()"></button>
+            <button id="borracha" class="icon" onclick="troca_ferramenta('borracha'); atualiza_ferramenta()"></button>
+            <button id="cursor" class="icon" onclick="troca_ferramenta('cursor'); atualiza_ferramenta()"></button>
+            <button id="mover" class="icon" onclick="troca_ferramenta('mover'); atualiza_ferramenta()"></button>
+            <input type="hidden" value="lapis" id="ferramenta-atual">
         </nav>
         <nav id="botoes-cor">
-            <button id="cor-azul" class="icon"></button>
-            <button id="cor-vermelho" class="icon"></button>
-            <button id="cor-verde" class="icon"></button>
+            <button id="cor-azul" class="icon" onclick="troca_cor('azul'); atualiza_cor()"></button>
+            <button id="cor-vermelho" class="icon" onclick="troca_cor('vermelho'); atualiza_cor()"></button>
+            <button id="cor-verde" class="icon" onclick="troca_cor('verde'); atualiza_cor()"></button>
+            <input type="hidden" value="azul" id="cor-atual">
         </nav>
         <button id="btn-tema" onclick="desliza_slider()"><span id="slider"></span></button>
         <canvas id="canvas-jogo"></canvas>
         <nav id="botoes-tempo">
-            <button id="play" class="icon"></button>
-            <button id="pause" class="icon"></button>
-            <button id="stop" class="icon"></button>
+            <button id="play" class="icon" onclick="troca_status('play'); atualiza_status()"></button>
+            <button id="pause" class="icon" onclick="troca_status('pause'); atualiza_status()"></button>
+            <button id="stop" class="icon" onclick="troca_status('stop'); atualiza_status()"></button>
+            <input type="hidden" value="stop" id="status-atual">
         </nav>
     </main>
 </body>

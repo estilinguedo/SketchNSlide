@@ -51,6 +51,7 @@ main {
     background-repeat: no-repeat;
 
     transition: left 0.5s, background-image 0.5s;
+    transition-timing-function: ease-in-out;
 }
 
 #logo {
@@ -90,12 +91,13 @@ main > a {
 }
 
 #menu-opcoes {
-    width: 300px;
+    width: 360px;
     height: 100vh;
 
     position: fixed;
-    left: -300px;
+    left: -360px;
     transition: left 0.5s;
+    transition-timing-function: ease-in-out;
 }
 
 #botoes-topo {
