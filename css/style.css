@@ -89,6 +89,15 @@ main > a {
     left: 7px;
 }
 
+#menu-opcoes {
+    width: 300px;
+    height: 100vh;
+
+    position: fixed;
+    left: -300px;
+    transition: left 0.5s;
+}
+
 #botoes-topo {
     position: fixed;
     border: none;

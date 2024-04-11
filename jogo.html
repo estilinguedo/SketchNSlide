@@ -10,11 +10,18 @@
     <link rel="stylesheet" href="./css/dia.css" id="tema">
 
     <script src="./js/muda_tema.js"></script>
+    <script src="./js/hud.js"></script>
     <script src="./js/jogo.js"></script>
 </head>
 <body onload="inicializa_canvas()">
+    <aside id="menu-opcoes" style="background-color: red;">
+        <!--Escolher áudio-->
+        <!--Redimensionar o canvas-->
+        <!--Reposicionar a bandeira-->
+        <!--Quantidade de riders-->
+    </aside>
+    <button id="config" class="icon" onclick="mostra_opcoes()"></button>
     <main>
-        <button id="config" class="icon"></button>
         <nav id="botoes-topo">
             <button id="lapis" class="icon"></button>
             <button id="linha" class="icon"></button>
