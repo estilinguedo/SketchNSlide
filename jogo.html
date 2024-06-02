@@ -12,12 +12,16 @@
 
     <script src="./js/muda_tema.js"></script>
     <script src="./js/hud.js"></script>
-    <script src="./js/jogo.js"></script>
+    <script src="js/jogo.js"></script>
+
+    <script src="js/Objetos/jogador.js"></script>
+    <script src="js/Objetos/desenho.js"></script>
+    <script src="js/Objetos/bandeira.js"></script>
 </head>
-<body onload="inicializa_canvas()">
+<body onload="canvas()">
     <aside id="menu-opcoes" style="background-color: red;">
+        
         <!--Escolher áudio-->
-        <!--Redimensionar o canvas-->
         <!--Reposicionar a bandeira-->
         <!--Quantidade de riders-->
     </aside>
@@ -38,13 +42,18 @@
             <input type="hidden" value="azul" id="cor-atual">
         </nav>
         <button id="btn-tema" onclick="desliza_slider()"><span id="slider"></span></button>
-        <canvas id="canvas-jogo"></canvas>
+
+        <canvas id="canvas-jogo">  
+            <!--O que estiver dentro da tag só será exibido se o navegador não suportar o canvas-->  
+            <p> O seu navegador não suporta canvas</p>
+        </canvas>
         <nav id="botoes-tempo">
             <button id="play" class="icon" onclick="troca_status('play'); atualiza_status()"></button>
             <button id="pause" class="icon" onclick="troca_status('pause'); atualiza_status()"></button>
             <button id="stop" class="icon" onclick="troca_status('stop'); atualiza_status()"></button>
             <input type="hidden" value="stop" id="status-atual">
         </nav>
+
     </main>
 </body>
 </html>
