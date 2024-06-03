@@ -1,6 +1,6 @@
 let jogadores = [];
 let bandeiras = [];
-let linhas = [];
+
 
 function adicionarJogador(x, y) {
     let canvasJogo = document.getElementById("canvas-jogo");
@@ -18,15 +18,18 @@ function adicionarJogador(x, y) {
 function canvas() {    
     let canvasJogo = document.getElementById("canvas-jogo");
     let ctx = canvasJogo.getContext('2d'); // Contexto do Canvas
-    canvasJogo.height = window.innerHeight;
+    canvasJogo.height = window.innerHeight; 
     canvasJogo.width = window.innerWidth;
 
     //provisório
     adicionarJogador(100, 100); // X e o Y devem poder ser escolhidos no menu
     adicionarJogador(300, 300);
 
+    const desenho = new Desenho(ctx);
 
     const game=()=>{ // Limpa e desenha a cada frame
+        canvasJogo.height = window.innerHeight;// O tamanho deve ser atualizado para manter o site funcionando
+        canvasJogo.width = window.innerWidth;
         ctx.clearRect(0, 0, canvasJogo.width, canvasJogo.height);
         for (const bandeira of bandeiras) {
             bandeira.desenharBandeira();
@@ -40,11 +43,10 @@ function canvas() {
             jogador.desenharJogador();
            
         }
-        /*
-        for (const desenho of linhas) {
-            desenho.desenharLinha();
-        }
-        */
+        canvasJogo.addEventListener('mousedown', (event) => desenho.mouseClick(event, ferramentaAtual));
+        canvasJogo.addEventListener('mousemove', (event) => desenho.mousePressionado(event));
+        canvasJogo.addEventListener('mouseup', (event) => desenho.mouseLevantado());
+        desenho.desenharLinha();
         requestAnimationFrame(game);
     }
     requestAnimationFrame(game);

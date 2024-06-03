@@ -1,5 +1,5 @@
 class Bandeira{
-    constructor(ctx,x,y){ // É chamado quando o objeto é instanciado
+    constructor(ctx,x,y) { // É chamado quando o objeto é instanciado
         this.ctx = ctx;
       
         // Pos

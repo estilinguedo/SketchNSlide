@@ -1,5 +1,5 @@
 class Jogador{
-    constructor(ctx,x,y){ // É chamado quando o objeto é instanciado
+    constructor(ctx,x,y) { // É chamado quando o objeto é instanciado
         this.ctx = ctx;
       
         // Pos
@@ -23,7 +23,7 @@ class Jogador{
     }
 
 
-    desenharJogador(){   
+    desenharJogador() {   
         // O jogador é redesenhado todo frame
         // Mudar o sprite
         if (this.jogando) {
