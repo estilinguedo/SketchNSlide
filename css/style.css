@@ -42,7 +42,7 @@ main {
     height: 20px;
 
     border-radius: 34px;
-    
+
     position: relative;
     left: 0%;
 
@@ -68,7 +68,7 @@ p {
     text-align: justify;
 }
 
-main > a {
+main>a {
     width: 15vw;
     height: 10vh;
 
@@ -96,8 +96,23 @@ main > a {
 
     position: fixed;
     left: -360px;
-    transition: left 0.5s;
+    transition: left 0.75s;
     transition-timing-function: ease-in-out;
+    border-radius: 0 7vh 7vh 0;
+    padding: 3.5vh 45px;
+}
+
+#menu-opcoes > *{
+    margin: 0 0 1vh 0;
+}
+
+.botao-menu-estilo{
+    text-decoration: underline;
+    border-radius: 1vh;
+    font-weight: bold;
+    padding: 0.5em;
+    display: inline-block;
+    cursor: pointer;
 }
 
 label:hover {
@@ -123,25 +138,27 @@ input[type="radio"] {
 
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
 
     background-color: transparent;
     transition: background-color 0.5s;
     transition-timing-function: ease-in-out;
 }
 
-.container-icone > span, #config {
+.container-icone>span,
+#config {
     width: 30px;
     height: 30px;
 
     background-repeat: no-repeat;
     background-size: cover;
     background-color: transparent;
-    
+
     border: none;
 }
 
-input[name="ferramenta"]:checked+label, input[name="status"]:checked+label {
+input[name="ferramenta"]:checked+label,
+input[name="status"]:checked+label {
     background-color: cadetblue;
 }
 
@@ -157,7 +174,7 @@ input[name="ferramenta"]:checked+label, input[name="status"]:checked+label {
 #botoes-cor span {
     width: 50px;
     height: 30px;
-    
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -178,7 +195,7 @@ input[name="cor"]:checked+label {
 
 #botoes-cor *:hover {
     filter: brightness(130%);
-    transition: 1s;
+    transition: 1s !important;
     transition-timing-function: ease-in-out;
 }
 
@@ -212,4 +229,13 @@ input[name="cor"]:checked+label {
     bottom: 7px;
 
     display: flex;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+hr{
+    border-radius: 0.5vh;
+    margin-top: 2vh !important;
 }

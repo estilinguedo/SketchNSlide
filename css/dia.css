@@ -50,3 +50,16 @@ a {
 #icone-stop {
     background-image: url("../img/stop.svg");
 }
+
+#menu-opcoes {
+    background-color: #c0cbdc;
+    color: #262b44;
+}
+.botao-menu-estilo {
+    border: solid #262b44 0.5vh;
+    color: #262b44;
+    background-color: #c0cbdc;
+}
+hr{
+    border-top: 0.5vh solid #262b44;
+}

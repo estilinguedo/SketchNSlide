@@ -11,19 +11,52 @@
     <link rel="icon" type="image/x-icon" href="img/favicon.png">
 
     <script src="./js/muda_tema.js"></script>
-    <script src="./js/hud.js"></script>
+    <script src="./js/menu.js"></script>
     <script src="js/jogo.js"></script>
 
     <script src="js/Objetos/jogador.js"></script>
     <script src="js/Objetos/desenho.js"></script>
     <script src="js/Objetos/bandeira.js"></script>
 </head>
-<body onload="inicializa_selecionados(); canvas()">
-    <aside id="menu-opcoes" style="background-color: red;">
+<body onload="inicializa_selecionados(); canvas(); carrega_input()">
+    <aside id="menu-opcoes">
         
-        <!--Escolher áudio-->
+        <!-- Escolher áudio-->
+        
+        <h2>Música Personalizada</h2>
+        <label for="musica" class="botao-menu-estilo">
+            Fazer upload
+        </label>
+        <input type="file" id="musica" accept="audio/*">
+        <hr>
+
         <!--Reposicionar a bandeira-->
+        <h2>Reposicionar Sliders</h2>
+        <label for="reposicionar" class="botao-menu-estilo">
+            Reposicionar Bandeira
+        </label>
+        <button id="reposicionar" onclick="reposicionar_bandeira()" hidden></button>
+
+        <hr>
         <!--Quantidade de riders-->
+        <h2>Quantidade de Sliders</h2>
+        <select name="qtd-riders" class="botao-menu-estilo" id="input-riders">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+
+        <hr>
+        <!--Skins-->
+        <h2>&#x1F92B; Skins &#x1F92B;</h2>
+        <select name="skin" class="botao-menu-estilo" id="skin-riders">
+            <option value="padrao">Padrão</option>
+            <option value="sugoma1">Amogus V1</option>
+            <option value="sugoma2">Amogus V2</option>
+        </select>
     </aside>
     <button id="config" class="icon" onclick="mostra_opcoes()"></button>
     <main>

@@ -17,7 +17,7 @@ class Jogador{
 
         // Sprite
         this.jogadorSprite = new Image();
-        this.jogadorSprite.src ="img/JogadorSprites/jogador.png";
+        this.jogadorSprite.src ="img/JogadorSprites/cinza.png";
 
 
     }
