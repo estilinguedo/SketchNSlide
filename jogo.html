@@ -18,7 +18,7 @@
     <script src="js/Objetos/desenho.js"></script>
     <script src="js/Objetos/bandeira.js"></script>
 </head>
-<body onload="canvas()">
+<body onload="inicializa_selecionados(); canvas()">
     <aside id="menu-opcoes" style="background-color: red;">
         
         <!--Escolher áudio-->
@@ -28,18 +28,40 @@
     <button id="config" class="icon" onclick="mostra_opcoes()"></button>
     <main>
         <nav id="botoes-topo">
-            <button id="lapis" class="icon" onclick="troca_ferramenta('lapis'); atualiza_ferramenta()"></button>
-            <button id="linha" class="icon" onclick="troca_ferramenta('linha'); atualiza_ferramenta()"></button>
-            <button id="borracha" class="icon" onclick="troca_ferramenta('borracha'); atualiza_ferramenta()"></button>
-            <button id="cursor" class="icon" onclick="troca_ferramenta('cursor'); atualiza_ferramenta()"></button>
-            <button id="mover" class="icon" onclick="troca_ferramenta('mover'); atualiza_ferramenta()"></button>
-            <input type="hidden" value="lapis" id="ferramenta-atual">
+            <span>
+                <input type="radio" name="ferramenta" id="lapis" value="lapis" onchange="atualiza('ferramenta')" checked>
+                <label for="lapis" class="container-icone"> <span id="icone-lapis"></span> </label>
+            </span>
+            <span>
+                <input type="radio" name="ferramenta" id="linha" value="linha" onchange="atualiza('ferramenta')">
+                <label for="linha" class="container-icone"> <span id="icone-linha"></span> </label>
+            </span>
+            <span>
+                <input type="radio" name="ferramenta" id="borracha" value="borracha" onchange="atualiza('ferramenta')">
+                <label for="borracha" class="container-icone"> <span id="icone-borracha"></span> </label>
+            </span>
+            <span>
+                <input type="radio" name="ferramenta" id="cursor" value="cursor" onchange="atualiza('ferramenta')">
+                <label for="cursor" class="container-icone"> <span id="icone-cursor"></span> </label>
+            </span>
+            <span>
+                <input type="radio" name="ferramenta" id="mover" value="mover" onchange="atualiza('ferramenta')">
+                <label for="mover" class="container-icone"> <span id="icone-mover"></span> </label>
+            </span>
         </nav>
         <nav id="botoes-cor">
-            <button id="cor-azul" class="icon" onclick="troca_cor('azul'); atualiza_cor()"></button>
-            <button id="cor-vermelho" class="icon" onclick="troca_cor('vermelho'); atualiza_cor()"></button>
-            <button id="cor-verde" class="icon" onclick="troca_cor('verde'); atualiza_cor()"></button>
-            <input type="hidden" value="azul" id="cor-atual">
+            <span>
+                <input type="radio" name="cor" id="cor-azul" value="azul" onchange="atualiza('cor')" checked>
+                <label for="cor-azul" class="circulo"></label>
+            </span>
+            <span>
+                <input type="radio" name="cor" id="cor-vermelho" value="vermelho" onchange="atualiza('cor')">
+                <label for="cor-vermelho" class="circulo"></label>
+            </span>
+            <span>
+                <input type="radio" name="cor" id="cor-verde" value="verde" onchange="atualiza('cor')">
+                <label for="cor-verde" class="circulo"></label>
+            </span>
         </nav>
         <button id="btn-tema" onclick="desliza_slider()"><span id="slider"></span></button>
 
@@ -48,10 +70,18 @@
             <p> O seu navegador não suporta canvas</p>
         </canvas>
         <nav id="botoes-tempo">
-            <button id="play" class="icon" onclick="troca_status('play'); atualiza_status()"></button>
-            <button id="pause" class="icon" onclick="troca_status('pause'); atualiza_status()"></button>
-            <button id="stop" class="icon" onclick="troca_status('stop'); atualiza_status()"></button>
-            <input type="hidden" value="stop" id="status-atual">
+            <span>
+                <input type="radio" name="status" id="play" value="play" onchange="atualiza('status')">
+                <label for="play" class="container-icone"> <span id="icone-play"></span> </label>
+            </span>
+            <span>
+                <input type="radio" name="status" id="pause" value="pause" onchange="atualiza('status')" checked>
+                <label for="pause" class="container-icone"> <span id="icone-pause"></span> </label>
+            </span>
+            <span>
+                <input type="radio" name="status" id="stop" value="stop" onchange="atualiza('status')">
+                <label for="stop" class="container-icone"> <span id="icone-stop"></span> </label>
+            </span>
         </nav>
 
     </main>

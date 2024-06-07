@@ -1,7 +1,6 @@
 let jogadores = [];
 let bandeiras = [];
 
-
 function adicionarJogador(x, y) {
     let canvasJogo = document.getElementById("canvas-jogo");
     let ctx = canvasJogo.getContext('2d'); 
@@ -54,41 +53,52 @@ function canvas() {
 
 
 //A fazer
-let ferramentaAtual = "lapis";
-function atualiza_ferramenta() {
-    ferramentaAtual = document.getElementById("ferramenta-atual").value;
-    console.log(ferramentaAtual);
+let ferramentaAtual;
+let corAtual;
+let statusTempo;
+function inicializa_selecionados() {
+    ferramentaAtual = document.querySelector("input[name='ferramenta']:checked").value;
+    corAtual = document.querySelector("input[name='cor']:checked").value;
+    statusTempo = document.querySelector("input[name='status']:checked").value;
 }
-//A fazer
-let corAtual = "azul";
-function atualiza_cor() {
-    corAtual = document.getElementById("cor-atual").value;
-    console.log(corAtual);
+
+function atualiza(variavel) {
+    let valor_novo = document.querySelector(`input[name='${variavel}']:checked`).value;
+
+    switch (variavel) {
+        case "ferramenta":
+            ferramentaAtual = valor_novo;
+
+            document.getElementById("botoes-cor").style.display = (["lapis", "linha"].includes(ferramentaAtual)) ? "" : "none";
+            break;
+        case "cor":
+            corAtual = valor_novo;
+            console.log("a");
+            break;
+        case "status":
+            let status_mudou = (statusTempo != valor_novo);
+
+            statusTempo = valor_novo;
+            if (status_mudou) {
+                aplica_status_novo();
+            }
+    }
 }
 
 //Feito
-let statusTempo = "stop";
-function atualiza_status() {
-    const novoStatus = document.getElementById("status-atual").value;
-    if (statusTempo !== 'pause' && novoStatus === 'play') { // Reinicia o jogo caso o jogador não tenha pausado o jogo(se o jogador pausar o jogo ele não irá ser reiniciado, continuando de onde parou)
-        for (const jogador of jogadores) {
-            jogador.start();  
-        }
-        // Animação no botão de start(O botão deve ficar com um círculo azul)
-
-    }else{
-        if( novoStatus === 'stop' ){
+function aplica_status_novo() {
+    switch (statusTempo) {
+        case "play":
+            for (const jogador of jogadores) {
+                jogador.start();  
+            }
+            break;
+        case "stop":
             for (const jogador of jogadores) {
                 jogador.stop();  
             }
-            // Animação no botão de stop
-
-        }
-        else if (novoStatus === 'play' || novoStatus === 'pause'){ // O jogador clicou para pausar o jogo
-            // Animação no botão de pause(O botão deve ficar com um círculo azul)
+        case "pause":
             console.log("jogo pausado");
-        }
-
+            break;
     }
-    statusTempo = novoStatus;
 }

@@ -100,20 +100,40 @@ main > a {
     transition-timing-function: ease-in-out;
 }
 
-#botoes-topo {
-    position: fixed;
-    border: none;
-    top: 7px;
-}
-
-#botoes-topo:hover {
+label:hover {
     cursor: pointer;
 }
 
-.icon {
+#botoes-topo {
+    position: fixed;
+    border: none;
+    top: 0px;
+
+    display: flex;
+}
+
+input[type="radio"] {
+    opacity: 0;
+}
+
+.container-icone {
+    width: 45px;
+    height: 45px;
+    border-radius: 34px;
+
+    display: flex;
+    justify-content: center;
+    align-items:center;
+
+    background-color: transparent;
+    transition: background-color 0.5s;
+    transition-timing-function: ease-in-out;
+}
+
+.container-icone > span, #config {
     width: 30px;
     height: 30px;
-    
+
     background-repeat: no-repeat;
     background-size: cover;
     background-color: transparent;
@@ -121,52 +141,75 @@ main > a {
     border: none;
 }
 
-.icon:hover {
-    cursor: pointer;
+input[name="ferramenta"]:checked+label, input[name="status"]:checked+label {
+    background-color: cadetblue;
 }
 
 #botoes-cor {
     position: fixed;
     border: none;
-    top: 44px;
+    top: 75px;
+
+    padding: 5px 0px;
+    display: flex;
 }
 
-#botoes-cor * {
-    border-radius: 50%;
+#botoes-cor span {
+    width: 50px;
+    height: 30px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circulo {
+    width: 20px;
+    height: 20px;
+
+    border-radius: 34px;
+    transition: width 0.2s, height 0.2s !important;
+}
+
+input[name="cor"]:checked+label {
+    width: 30px;
+    height: 30px;
 }
 
 #botoes-cor *:hover {
     filter: brightness(130%);
-    transition: 2s;
+    transition: 1s;
     transition-timing-function: ease-in-out;
+}
+
+#cor-azul+label {
+    background-color: #3a55db;
+}
+
+#cor-vermelho+label {
+    background-color: #e44056;
+}
+
+#cor-verde+label {
+    background-color: #34c56c;
+}
+
+#cor-azul:hover+label {
+    box-shadow: 0 0 50px 8px #3a55db;
+}
+
+#cor-vermelho:hover+label {
+    box-shadow: 0 0 50px 8px #e44056;
+}
+
+#cor-verde:hover+label {
+    box-shadow: 0 0 50px 8px #34c56c;
 }
 
 #botoes-tempo {
     position: fixed;
     border: none;
     bottom: 7px;
-}
 
-#cor-azul {
-    background-color: #3a55db;
-}
-
-#cor-vermelho {
-    background-color: #e44056;
-}
-
-#cor-verde {
-    background-color: #34c56c;
-}
-
-#cor-azul:hover {
-    box-shadow: 0 0 50px 8px #3a55db;
-}
-
-#cor-vermelho:hover {
-    box-shadow: 0 0 50px 8px #e44056;
-}
-
-#cor-verde:hover {
-    box-shadow: 0 0 50px 8px #34c56c;
+    display: flex;
 }

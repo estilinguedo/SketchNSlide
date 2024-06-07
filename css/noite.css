@@ -20,34 +20,34 @@ a {
     background-image: url("../img/gear_dark.svg");
 }
 
-#lapis {
+#icone-lapis {
     background-image: url("../img/pencil_dark.svg");
 }
 
-#borracha {
+#icone-borracha {
     background-image: url("../img/eraser_dark.svg");
 }
 
-#linha {
+#icone-linha {
     background-image: url("../img/line_dark.svg");
 }
 
-#cursor {
+#icone-cursor {
     background-image: url("../img/cursor_dark.svg");
 }
 
-#mover {
+#icone-mover {
     background-image: url("../img/move_dark.svg");
 }
 
-#play {
+#icone-play {
     background-image: url("../img/play_dark.svg");
 }
 
-#pause {
+#icone-pause {
     background-image: url("../img/pause_dark.svg");
 }
 
-#stop {
+#icone-stop {
     background-image: url("../img/stop_dark.svg");
 }
