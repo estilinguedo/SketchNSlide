@@ -25,7 +25,9 @@ function canvas() {
     adicionarJogador(300, 300);
 
     const desenho = new Desenho(ctx);
-
+    canvasJogo.addEventListener('mousedown', (event) => desenho.mouseClick(event));
+    canvasJogo.addEventListener('mousemove', (event) => desenho.mousePressionado(event, ferramentaAtual));
+    canvasJogo.addEventListener('mouseup', (event) => desenho.mouseLevantado());
     const game=()=>{ // Limpa e desenha a cada frame
         canvasJogo.height = window.innerHeight;// O tamanho deve ser atualizado para manter o site funcionando
         canvasJogo.width = window.innerWidth;
@@ -42,15 +44,17 @@ function canvas() {
             jogador.desenharJogador();
            
         }
-        canvasJogo.addEventListener('mousedown', (event) => desenho.mouseClick(event, ferramentaAtual));
-        canvasJogo.addEventListener('mousemove', (event) => desenho.mousePressionado(event));
-        canvasJogo.addEventListener('mouseup', (event) => desenho.mouseLevantado());
-        desenho.desenharLinha();
+        
+        desenho.desenharLinhasExistentes();
+        desenho.desenharBorracha();   
+        if (desenho.desenhando) {
+            desenho.desenharLinhaTemporaria();
+        }
+       
         requestAnimationFrame(game);
     }
     requestAnimationFrame(game);
 }
-
 
 //A fazer
 let ferramentaAtual;
