@@ -5,6 +5,12 @@
     padding: 0px;
     box-sizing: border-box;
     font-family: "Noto Sans", sans-serif;
+} 
+
+body, #canvas-jogo {
+    user-select: none;
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
 main {

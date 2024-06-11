@@ -17,6 +17,7 @@
     <script src="js/Objetos/jogador.js"></script>
     <script src="js/Objetos/desenho.js"></script>
     <script src="js/Objetos/bandeira.js"></script>
+   
 </head>
 <body onload="inicializa_selecionados(); canvas(); carrega_input()">
     <aside id="menu-opcoes">
@@ -104,15 +105,15 @@
         </canvas>
         <nav id="botoes-tempo">
             <span>
-                <input type="radio" name="status" id="play" value="play" onchange="atualiza('status')">
+                <input type="radio" name="status" id="play" value="play" onclick="atualiza('status')">
                 <label for="play" class="container-icone"> <span id="icone-play"></span> </label>
             </span>
             <span>
-                <input type="radio" name="status" id="pause" value="pause" onchange="atualiza('status')" checked>
+                <input type="radio" name="status" id="pause" value="pause" onclick="atualiza('status')" checked>
                 <label for="pause" class="container-icone"> <span id="icone-pause"></span> </label>
             </span>
             <span>
-                <input type="radio" name="status" id="stop" value="stop" onchange="atualiza('status')">
+                <input type="radio" name="status" id="stop" value="stop" onclick="atualiza('status')">
                 <label for="stop" class="container-icone"> <span id="icone-stop"></span> </label>
             </span>
         </nav>
