@@ -147,7 +147,7 @@ input[type="radio"] {
     align-items: center;
 
     background-color: transparent;
-    transition: background-color 0.5s;
+    transition: background-color 0.2s;
     transition-timing-function: ease-in-out;
 }
 
@@ -201,7 +201,7 @@ input[name="cor"]:checked+label {
 
 #botoes-cor *:hover {
     filter: brightness(130%);
-    transition: 1s !important;
+    transition: 0.2s !important;
     transition-timing-function: ease-in-out;
 }
 
