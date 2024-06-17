@@ -29,13 +29,13 @@ class Desenho {
     }
 
     mouseClick(event) {
-        if(event.button === 0){    
+        if(event.button === 0 && this.mouseNaTela === true){    
             this.ferramentaAtual = ferramentaAtual;
             const posX = event.clientX;
             const posY = event.clientY;
             this.desenhando = true;
             this.mouseNaTela = true;
-
+            this.usandoBorracha = true;
 
             if (this.ferramentaAtual !== 'borracha') {
             
@@ -51,19 +51,22 @@ class Desenho {
     }
 
     mousePressionado(event, ferramentaAtual, corAtual) {
-        this.posicaoMouse = { x: event.clientX, y: event.clientY };
-        this.ferramentaAtual = ferramentaAtual;
-        this.mouseNaTela = true;
 
-        if (this.desenhando) {
+        if(this.mouseNaTela === true){
+
+            this.posicaoMouse = { x: event.clientX, y: event.clientY };
+            this.ferramentaAtual = ferramentaAtual;    
             this.xFinal = event.clientX;
-            this.yFinal = event.clientY;
-            if(this.ferramentaAtual === "lapis"){
-                this.novaLinha(corAtual);
-            }else if (this.ferramentaAtual === 'borracha') {
-                this.linhas = this.linhas.filter(linha => !this.linhaColisao(linha.xInicial, linha.yInicial, linha.xFinal, linha.yFinal, this.xFinal, this.yFinal));    
+            this.yFinal = event.clientY;     
+            if (this.desenhando) {
+              
+                if(this.ferramentaAtual === "lapis"){
+                    this.novaLinha(corAtual);
+                }        
             }
-           
+            if (this.ferramentaAtual === 'borracha' && this.usandoBorracha == true) {
+                this.linhas = this.linhas.filter(linha => !this.linhaColisao(linha.xInicial, linha.yInicial, linha.xFinal, linha.yFinal, this.xFinal, this.yFinal));    // filter -> remove as linhas que não atenderam a condição
+            }
         }
     
     }
@@ -71,15 +74,20 @@ class Desenho {
     mouseLevantado(event, corAtual) {
         if (this.desenhando && event.button === 0) {
             this.desenhando = false;
+            this.usandoBorracha = false
             this.novaLinha(corAtual);
         }
     }
-    mouseSaiu(corAtual) {
+    mouseSaiu() {
+        if( this.ferramentaAtual === "linha" && this.desenhando == true){
+            this.novaLinha(corAtual);
+        }
         this.desenhando = false;   
-        this.novaLinha(corAtual);   
         this.mouseNaTela = false;
     }
-
+    mouseEntrou() {
+        this.mouseNaTela = true;
+    }
     desenharLinhaTemporaria(corAtual) {
         if(this.ferramentaAtual === "linha" && this.desenhando){
            
@@ -130,6 +138,7 @@ class Desenho {
         }
     }
     desenharBorracha() {
+       
         if (this.ferramentaAtual === "borracha" && this.mouseNaTela === true) {
             const x = this.posicaoMouse.x;
             const y = this.posicaoMouse.y;
