@@ -3,8 +3,8 @@ main {
 }
 
 #btn-tema {
-    background-color: #262b44;
-    border: 2px solid #c0cbdc;
+    border: 2px solid transparent;
+    background-color: darkslateblue;
 }
 
 p {

@@ -5,6 +5,9 @@
     padding: 0px;
     box-sizing: border-box;
     font-family: "Noto Sans", sans-serif;
+
+    flex-shrink: 0;
+    flex-grow: 0;
 } 
 
 body, #canvas-jogo {
@@ -38,6 +41,13 @@ main {
     align-items: center;
 }
 
+#hud #btn-tema {
+    position: inherit;
+
+    justify-self: flex-start;
+    align-self: flex-end;
+}
+
 #btn-tema:hover {
     cursor: pointer;
 }
@@ -55,6 +65,7 @@ main {
     background-image: url("../img/tema_claro.svg");
     background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
 
     transition: left 0.5s, background-image 0.5s;
     transition-timing-function: ease-in-out;
@@ -74,7 +85,7 @@ p {
     text-align: justify;
 }
 
-main>a {
+main > a {
     width: 15vw;
     height: 10vh;
 
@@ -90,10 +101,27 @@ main>a {
     border-radius: 1vh;
 }
 
+#hud {
+    width: 100vw;
+    height: 100vh;
+
+    position: absolute;
+    
+    display: flex;
+}
+
+.terco-hud {
+    width: 33%;
+    height: 100%;
+    padding: 1vh 1vw;
+
+    display: flex;
+    flex-direction: column;
+}
+
 #config {
-    position: fixed;
-    top: 7px;
-    left: 7px;
+    justify-self: flex-start;
+    align-self: flex-start;
 }
 
 #menu-opcoes {
@@ -125,12 +153,31 @@ label:hover {
     cursor: pointer;
 }
 
+#terco-meio-hud {
+    justify-content: space-between;
+    align-items: center;
+}
+
 #botoes-topo {
-    position: fixed;
     border: none;
-    top: 0px;
 
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#botoes-topo > nav {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+}
+
+#botoes-ferramentas span,
+#botoes-tempo span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 input[type="radio"] {
@@ -140,18 +187,19 @@ input[type="radio"] {
 .container-icone {
     width: 45px;
     height: 45px;
-    border-radius: 34px;
+    border-radius: 100%;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
     background-color: transparent;
+    background-size: cover;
     transition: background-color 0.2s;
     transition-timing-function: ease-in-out;
 }
 
-.container-icone>span,
+.container-icone > span,
 #config {
     width: 30px;
     height: 30px;
@@ -163,18 +211,14 @@ input[type="radio"] {
     border: none;
 }
 
+.container-icone > span {
+    width: 66%;
+    height: 66%;
+}
+
 input[name="ferramenta"]:checked+label,
 input[name="status"]:checked+label {
     background-color: cadetblue;
-}
-
-#botoes-cor {
-    position: fixed;
-    border: none;
-    top: 75px;
-
-    padding: 5px 0px;
-    display: flex;
 }
 
 #botoes-cor span {
@@ -190,7 +234,7 @@ input[name="status"]:checked+label {
     width: 20px;
     height: 20px;
 
-    border-radius: 34px;
+    border-radius: 100%;
     transition: width 0.2s, height 0.2s !important;
 }
 
@@ -230,9 +274,7 @@ input[name="cor"]:checked+label {
 }
 
 #botoes-tempo {
-    position: fixed;
     border: none;
-    bottom: 7px;
 
     display: flex;
 }
