@@ -1,5 +1,5 @@
 let tags = [];
-let razao_anterior;
+let razao_atual;
 
 function inicializa_escala_hud() {
     for (let tag of document.getElementsByClassName("tamanho-fixo")) {
@@ -14,11 +14,16 @@ function inicializa_escala_hud() {
 }
 
 function escala_hud() {
-    for (let tag of tags) {
-        tag.referencia.style.height = `${tag.altura_fixa / window.devicePixelRatio}px`;
-        tag.referencia.style.width = `${tag.largura_fixa / window.devicePixelRatio}px`;
+    if (window.devicePixelRatio == razao_atual) {
+        setTimeout(escala_hud, 50);
+        return;
     }
 
-    razao_anterior = window.devicePixelRatio;
-    setTimeout(escala_hud, 500);
+    razao_atual = window.devicePixelRatio;
+    for (let tag of tags) {
+        tag.referencia.style.height = `${tag.altura_fixa / razao_atual}px`;
+        tag.referencia.style.width = `${tag.largura_fixa / razao_atual}px`;
+    }
+
+    setTimeout(escala_hud, 50);
 }

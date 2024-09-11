@@ -62,11 +62,11 @@
     </aside>
 
     <main>
-        <section id="hud">
-            <section class="terco-hud">
+        <section id="topo-hud">
+            <section class="terco-topo">
                 <button id="config" class="icon tamanho-fixo" onclick="mostra_opcoes()"></button>
             </section>
-            <section class="terco-hud" id="terco-meio-hud">
+            <section class="terco-topo" id="terco-meio-hud">
                 <section id="botoes-topo" class="tamanho-fixo">
                     <nav id="botoes-ferramentas" class="tamanho-fixo">
                         <span class="tamanho-fixo">
@@ -93,38 +93,38 @@
                     <nav id="botoes-cor" class="tamanho-fixo">
                         <span class="tamanho-fixo">
                             <input type="radio" class="tamanho-fixo" name="cor" id="cor-azul" value="azul" onchange="atualiza('cor')" checked>
-                            <label for="cor-azul" class="circulo tamanho-fixo"></label>
+                            <label for="cor-azul" class="circulo"></label>
                         </span>
                         <span class="tamanho-fixo">
                             <input type="radio" class="tamanho-fixo" name="cor" id="cor-vermelho" value="vermelho" onchange="atualiza('cor')">
-                            <label for="cor-vermelho" class="circulo tamanho-fixo"></label>
+                            <label for="cor-vermelho" class="circulo"></label>
                         </span>
                         <span class="tamanho-fixo">
                             <input type="radio" class="tamanho-fixo" name="cor" id="cor-verde" value="verde" onchange="atualiza('cor')">
-                            <label for="cor-verde" class="circulo tamanho-fixo"></label>
+                            <label for="cor-verde" class="circulo"></label>
                         </span>
                     </nav>
                 </section>
-                
-                <nav id="botoes-tempo" class="tamanho-fixo">
-                    <span class="tamanho-fixo">
-                        <input type="radio" class="tamanho-fixo" name="status" id="play" value="play" onclick="atualiza('status')">
-                        <label for="play" class="container-icone tamanho-fixo"> <span id="icone-play"></span> </label>
-                    </span>
-                    <span class="tamanho-fixo">
-                        <input type="radio" class="tamanho-fixo" name="status" id="pause" value="pause" onclick="atualiza('status')" checked>
-                        <label for="pause" class="container-icone tamanho-fixo"> <span id="icone-pause"></span> </label>
-                    </span>
-                    <span class="tamanho-fixo">
-                        <input type="radio" class="tamanho-fixo" name="status" id="stop" value="stop" onclick="atualiza('status')">
-                        <label for="stop" class="container-icone tamanho-fixo"> <span id="icone-stop"></span> </label>
-                    </span>
-                </nav>
             </section>
-            <section class="terco-hud">
+            <section class="terco-topo">
                 <button id="btn-tema" class="tamanho-fixo" onclick="desliza_slider()"><span id="slider" class="tamanho-fixo"></span></button>
             </section>
         </section>
+
+        <nav id="botoes-tempo" class="tamanho-fixo">
+            <span class="tamanho-fixo">
+                <input type="radio" class="tamanho-fixo" name="status" id="play" value="play" onclick="atualiza('status')">
+                <label for="play" class="container-icone tamanho-fixo"> <span id="icone-play"></span> </label>
+            </span>
+            <span class="tamanho-fixo">
+                <input type="radio" class="tamanho-fixo" name="status" id="pause" value="pause" onclick="atualiza('status')" checked>
+                <label for="pause" class="container-icone tamanho-fixo"> <span id="icone-pause"></span> </label>
+            </span>
+            <span class="tamanho-fixo">
+                <input type="radio" class="tamanho-fixo" name="status" id="stop" value="stop" onclick="atualiza('status')">
+                <label for="stop" class="container-icone tamanho-fixo"> <span id="icone-stop"></span> </label>
+            </span>
+        </nav>
 
         <canvas id="canvas-jogo">  
             <!--O que estiver dentro da tag só será exibido se o navegador não suportar o canvas-->  

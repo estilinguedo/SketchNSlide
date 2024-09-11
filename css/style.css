@@ -41,7 +41,7 @@ main {
     align-items: center;
 }
 
-#hud #btn-tema {
+#topo-hud #btn-tema {
     position: inherit;
 
     justify-self: flex-start;
@@ -101,19 +101,19 @@ main > a {
     border-radius: 1vh;
 }
 
-#hud {
+#topo-hud {
     width: 100vw;
-    height: 100vh;
+    padding: 1vh 1vw;
 
     position: absolute;
+    top: 0px;
     
     display: flex;
 }
 
-.terco-hud {
+.terco-topo {
     width: 33%;
     height: 100%;
-    padding: 1vh 1vw;
 
     display: flex;
     flex-direction: column;
@@ -222,7 +222,7 @@ input[name="status"]:checked+label {
 }
 
 #botoes-cor span {
-    width: 50px;
+    width: 40px;
     height: 30px;
 
     display: flex;
@@ -231,16 +231,16 @@ input[name="status"]:checked+label {
 }
 
 .circulo {
-    width: 20px;
-    height: 20px;
+    width: 50%;
+    height: 66%;
 
     border-radius: 100%;
     transition: width 0.2s, height 0.2s !important;
 }
 
 input[name="cor"]:checked+label {
-    width: 30px;
-    height: 30px;
+    width: 75%;
+    height: 100%;
 }
 
 #botoes-cor *:hover {
@@ -274,6 +274,8 @@ input[name="cor"]:checked+label {
 }
 
 #botoes-tempo {
+    position: absolute;
+    bottom: 1vh;
     border: none;
 
     display: flex;
