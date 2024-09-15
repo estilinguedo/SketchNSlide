@@ -30,7 +30,9 @@ function canvas() {
     canvasJogo.addEventListener('mousemove', (event) => desenho.mousePressionado(event, ferramentaAtual, corAtual));
     canvasJogo.addEventListener('mouseup', (event) => desenho.mouseLevantado(event, corAtual));
     canvasJogo.addEventListener('mouseleave', () => desenho.mouseSaiu(corAtual)); 
+    
     canvasJogo.addEventListener('mouseenter', () => desenho.mouseEntrou());
+    
     const game = () => { // Limpa e desenha a cada frame
         canvasJogo.height = window.innerHeight;// O tamanho deve ser atualizado para manter o site funcionando
         canvasJogo.width = window.innerWidth;

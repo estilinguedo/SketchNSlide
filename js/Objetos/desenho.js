@@ -35,7 +35,7 @@ class Desenho {
             const posY = event.clientY;
             this.desenhando = true;
             this.mouseNaTela = true;
-            this.usandoBorracha = true;
+        
 
             if (this.ferramentaAtual !== 'borracha') {
             
@@ -45,7 +45,7 @@ class Desenho {
                 this.yFinal = posY;
             } else {
                 this.linhas = this.linhas.filter(linha => !this.linhaColisao(linha.xInicial, linha.yInicial, linha.xFinal, linha.yFinal, posX, posY));
-            
+              
             }
         }
     }
@@ -62,20 +62,24 @@ class Desenho {
               
                 if(this.ferramentaAtual === "lapis"){
                     this.novaLinha(corAtual);
-                }        
+                }    
+                if (this.ferramentaAtual === 'borracha') {
+                    this.linhas = this.linhas.filter(linha => !this.linhaColisao(linha.xInicial, linha.yInicial, linha.xFinal, linha.yFinal, this.xFinal, this.yFinal));    // filter -> remove as linhas que não atenderam a condição
+                }    
             }
-            if (this.ferramentaAtual === 'borracha' && this.usandoBorracha == true) {
-                this.linhas = this.linhas.filter(linha => !this.linhaColisao(linha.xInicial, linha.yInicial, linha.xFinal, linha.yFinal, this.xFinal, this.yFinal));    // filter -> remove as linhas que não atenderam a condição
-            }
+
+        
         }
     
     }
 
     mouseLevantado(event, corAtual) {
-        if (this.desenhando && event.button === 0) {
-            this.desenhando = false;
-            this.usandoBorracha = false
+        if(event.button === 0){
+
+        if (this.desenhando) {
             this.novaLinha(corAtual);
+        }
+        this.desenhando = false;
         }
     }
     mouseSaiu() {
@@ -140,8 +144,8 @@ class Desenho {
     desenharBorracha() {
        
         if (this.ferramentaAtual === "borracha" && this.mouseNaTela === true) {
-            const x = this.posicaoMouse.x;
-            const y = this.posicaoMouse.y;
+            let x = this.posicaoMouse.x;
+            let y = this.posicaoMouse.y;
             this.ctx.fillStyle = `rgba(128, 128, 128, 0.5)`; 
             this.raio = this.larguraBorracha / 2;
             this.ctx.beginPath();
