@@ -26,7 +26,7 @@ function canvas() {
     adicionarJogador(300, 300);
 
     const desenho = new Desenho(ctx);
-    canvasJogo.addEventListener('mousedown', (event) => desenho.mouseClick(event));
+    canvasJogo.addEventListener('mousedown', (event) => desenho.mouseClick(event, ferramentaAtual));
     canvasJogo.addEventListener('mousemove', (event) => desenho.mousePressionado(event, ferramentaAtual, corAtual));
     canvasJogo.addEventListener('mouseup', (event) => desenho.mouseLevantado(event, corAtual));
     canvasJogo.addEventListener('mouseleave', () => desenho.mouseSaiu(corAtual)); 
@@ -54,7 +54,7 @@ function canvas() {
         desenho.desenharBorracha();   
         desenho.desenharLinhaTemporaria(corAtual);
         if (desenho.desenhando) {
-            desenho.desenharLinhaTemporaria();
+            desenho.desenharLinhaTemporaria(corAtual);
         }
        
         requestAnimationFrame(game);
@@ -76,7 +76,6 @@ function atualiza(variavel) {
     switch (variavel) {
         case "ferramenta":
             ferramentaAtual = valor_novo;
-            console.log(ferramentaAtual);
             document.getElementById("botoes-cor").style.display = (["lapis", "linha"].includes(ferramentaAtual)) ? "" : "none";
             break;
         case "cor":
