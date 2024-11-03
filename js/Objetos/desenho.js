@@ -28,12 +28,13 @@ class Desenho {
         return false;
     }
 
-    mouseClick(event, ferramentaAtual) {
+    mouseClick(event, ferramentaAtual, canvasJogo) {
         if(event.button === 0 && this.mouseNaTela){    
             this.ferramentaAtual = ferramentaAtual;
-            const posX = event.clientX;
-            const posY = event.clientY;
-            this.desenhando = (["lapis", "linha", "borracha"].includes(ferramentaAtual));
+            const retangulo = canvasJogo.getBoundingClientRect(); 
+            const posX = event.clientX - retangulo.left; 
+            const posY = event.clientY - retangulo.top;
+            this.desenhando = (["lapis", "linha"].includes(ferramentaAtual));
             this.mouseNaTela = true;
         
 
@@ -49,19 +50,20 @@ class Desenho {
         }
     }
 
-    mousePressionado(event, ferramentaAtual, corAtual) {
+    mousePressionado(event, ferramentaAtual, corAtual, canvasJogo) {
         if(!this.mouseNaTela) {
             return;
         }
 
+        const retangulo = canvasJogo.getBoundingClientRect(); 
         this.posicaoMouse = { 
-            x: event.clientX,
-            y: event.clientY 
+            x: event.clientX - retangulo.left, 
+            y: event.clientY - retangulo.top 
         };
 
         this.ferramentaAtual = ferramentaAtual;    
-        this.xFinal = event.clientX;
-        this.yFinal = event.clientY; 
+        this.xFinal = event.clientX - retangulo.left; 
+        this.yFinal = event.clientY - retangulo.top;
 
         if (this.desenhando) {        
             if(this.ferramentaAtual == "lapis") {

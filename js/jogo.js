@@ -18,24 +18,24 @@ function adicionarJogador(x, y) {
 function canvas() {    
     let canvasJogo = document.getElementById("canvas-jogo");
     let ctx = canvasJogo.getContext('2d'); // Contexto do Canvas
-    canvasJogo.height = window.innerHeight; 
-    canvasJogo.width = window.innerWidth;
+    canvasJogo.height = 5000; 
+    canvasJogo.width = 10000;
 
     //provisório
     adicionarJogador(100, 100); // X e o Y devem poder ser escolhidos no menu
     adicionarJogador(300, 300);
 
     const desenho = new Desenho(ctx);
-    canvasJogo.addEventListener('mousedown', (event) => desenho.mouseClick(event, ferramentaAtual));
-    canvasJogo.addEventListener('mousemove', (event) => desenho.mousePressionado(event, ferramentaAtual, corAtual));
+    canvasJogo.addEventListener('mousedown', (event) => desenho.mouseClick(event, ferramentaAtual, canvasJogo));
+    canvasJogo.addEventListener('mousemove', (event) => desenho.mousePressionado(event, ferramentaAtual, corAtual, canvasJogo));
     canvasJogo.addEventListener('mouseup', (event) => desenho.mouseLevantado(event, corAtual));
     canvasJogo.addEventListener('mouseleave', () => desenho.mouseSaiu(corAtual)); 
     
     canvasJogo.addEventListener('mouseenter', () => desenho.mouseEntrou());
     
     const game = () => { // Limpa e desenha a cada frame
-        canvasJogo.height = window.innerHeight;// O tamanho deve ser atualizado para manter o site funcionando
-        canvasJogo.width = window.innerWidth;
+        canvasJogo.height = 5000;// O tamanho deve ser atualizado para manter o site funcionando
+        canvasJogo.width = 10000;
         ctx.clearRect(0, 0, canvasJogo.width, canvasJogo.height);
         for (const bandeira of bandeiras) {
             bandeira.desenharBandeira();
