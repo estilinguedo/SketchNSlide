@@ -43,9 +43,11 @@ function canvas() {
         for (const jogador of jogadores) { // Pausa o jogo
             if (statusTempo === 'play') {
                 jogador.jogando = true;
+                jogador.atualizarHitbox();
             } else {
                 jogador.jogando = false;
             }
+            jogador.verificarColisao(desenho);
             jogador.desenharJogador();
         }
         desenho.desenharLinhasExistentes();
