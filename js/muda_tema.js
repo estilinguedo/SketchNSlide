@@ -1,3 +1,9 @@
+function carrega_tema() {
+    if (localStorage.getItem("tema").endsWith("noite.css")) {
+        desliza_slider();
+    }
+}
+
 function desliza_slider() {
     let slider = document.getElementById("slider");
     let tema = document.getElementById("tema");
@@ -8,4 +14,6 @@ function desliza_slider() {
     tema.href = (tema.href == tema_claro) ? "css/noite.css" : "css/dia.css";
     slider.style.left = (slider.style.left == "") ? "66%" : "";
     slider.style.backgroundImage = (slider.style.backgroundImage == "") ? 'url("./img/tema_escuro.svg")' : "";
+
+    localStorage.setItem("tema", tema.href);
 }

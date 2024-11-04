@@ -1,4 +1,5 @@
-main {
+main,
+#canvas-jogo {
     background-color: hsl(230, 28%, 27%);
 }
 

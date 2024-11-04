@@ -3,7 +3,15 @@ class Desenho {
         this.ctx = ctx;
         this.canvas = ctx.canvas;
         this.linhas = [];
+        this.areaSelecionada = {
+            x: 0,
+            y: 0,
+            largura: 0,
+            altura: 0
+        };
+        this.linhasSelecionadas = [];
         this.desenhando = false;
+        this.movendoAreaSelecionada = false;
         this.larguraLinha = 4;
         this.tamanhoMinimoLinha = 1.5;
         this.tamanhoMinimoLapis = 10;
@@ -13,7 +21,7 @@ class Desenho {
     }
 
     linhaColisao(xInicial, yInicial, xFinal, yFinal, posX, posY) {
-        const buffer = this.larguraBorracha /2;
+        const buffer = this.larguraBorracha / (window.devicePixelRatio * 2);
         const dentroSegmento = (px, py, x0, y0, x1, y1) => {
             const minX = Math.min(x0, x1);
             const maxX = Math.max(x0, x1);
@@ -21,32 +29,46 @@ class Desenho {
             const maxY = Math.max(y0, y1);
             return px >= minX - buffer  && px <= maxX + buffer && py >= minY - buffer && py <= maxY + buffer; // Se a posição do mouse estiver dentro da linha
         };
-        if (dentroSegmento(posX, posY, xInicial, yInicial, xFinal, yFinal)) {
-            console.log("encostou");
-            return true;
-        }
-        return false;
+
+        return dentroSegmento(posX, posY, xInicial, yInicial, xFinal, yFinal);
     }
 
     mouseClick(event, ferramentaAtual, canvasJogo) {
-        if(event.button === 0 && this.mouseNaTela){    
-            this.ferramentaAtual = ferramentaAtual;
-            const retangulo = canvasJogo.getBoundingClientRect(); 
-            const posX = event.clientX - retangulo.left; 
-            const posY = event.clientY - retangulo.top;
-            this.desenhando = (["lapis", "linha"].includes(ferramentaAtual));
-            this.mouseNaTela = true;
-        
+        if(!(event.button === 0 && this.mouseNaTela)){
+            return;
+        }
 
-            if (this.ferramentaAtual != 'borracha') {
-                this.xInicial = posX;
-                this.yInicial = posY;
-                this.xFinal = posX;
-                this.yFinal = posY;
-            } else {
-                this.linhas = this.linhas.filter(linha => !this.linhaColisao(linha.xInicial, linha.yInicial, linha.xFinal, linha.yFinal, posX, posY));
-              
-            }
+        this.ferramentaAtual = ferramentaAtual;
+        const retangulo = canvasJogo.getBoundingClientRect(); 
+        const posX = event.clientX - retangulo.left; 
+        const posY = event.clientY - retangulo.top;
+        this.desenhando = true;
+        this.mouseNaTela = true;
+    
+
+        if (this.ferramentaAtual == 'borracha') {
+            this.linhas = this.linhas.filter(linha => !this.linhaColisao(linha.xInicial, linha.yInicial, linha.xFinal, linha.yFinal, posX, posY));
+            return;
+        }
+
+        this.xInicial = posX;
+        this.yInicial = posY;
+        this.xFinal = posX;
+        this.yFinal = posY;
+        
+        if (this.ferramentaAtual = "cursor") {
+            let area_min_x = Math.min(this.areaSelecionada.x, this.areaSelecionada.x + this.areaSelecionada.largura);
+            let area_max_x = Math.max(this.areaSelecionada.x, this.areaSelecionada.x + this.areaSelecionada.largura);
+            let area_min_y = Math.min(this.areaSelecionada.y, this.areaSelecionada.y + this.areaSelecionada.altura);
+            let area_max_y = Math.max(this.areaSelecionada.y, this.areaSelecionada.y + this.areaSelecionada.altura);
+
+            let projecao_area_x = [area_min_x, area_max_x];
+            let projecao_area_y = [area_min_y, area_max_y];
+
+            let mouse_dentro_area_x = (posX >= projecao_area_x[0] && posX <= projecao_area_x[1]);
+            let mouse_dentro_area_y = (posY >= projecao_area_y[0] && posY <= projecao_area_y[1]);
+
+            this.movendoAreaSelecionada = (mouse_dentro_area_x && mouse_dentro_area_y);
         }
     }
 
@@ -62,23 +84,44 @@ class Desenho {
         };
 
         this.ferramentaAtual = ferramentaAtual;    
-        this.xFinal = event.clientX - retangulo.left; 
-        this.yFinal = event.clientY - retangulo.top;
+        this.xFinal = this.posicaoMouse.x;
+        this.yFinal = this.posicaoMouse.y;
 
         if (this.desenhando) {        
             if(this.ferramentaAtual == "lapis") {
                 this.novaLinha(corAtual);
-            }    
-            if (this.ferramentaAtual == 'borracha') {
+            } else if (this.ferramentaAtual == 'borracha') {
                 this.linhas = this.linhas.filter(linha => !this.linhaColisao(linha.xInicial, linha.yInicial, linha.xFinal, linha.yFinal, this.xFinal, this.yFinal));    // filter -> remove as linhas que não atenderam a condição
-            }    
-        }   
+            } else if (this.ferramentaAtual == "mover") {
+                window.scrollBy(this.xInicial - this.xFinal, this.yInicial - this.yFinal);
+            } else if (this.ferramentaAtual == "cursor" && this.movendoAreaSelecionada) {
+                let offset_x = this.xFinal - this.xInicial;
+                let offset_y = this.yFinal - this.yInicial;
+
+                this.areaSelecionada.x += offset_x;
+                this.areaSelecionada.y += offset_y;
+
+                for (let i of this.linhasSelecionadas) {
+                    this.linhas[i].xInicial += offset_x;
+                    this.linhas[i].yInicial += offset_y;
+                    this.linhas[i].xFinal += offset_x;
+                    this.linhas[i].yFinal += offset_y;
+                }
+
+                this.xInicial = this.xFinal;
+                this.yInicial = this.yFinal;
+            }
+        }
     }
 
     mouseLevantado(event, corAtual) {
-        if(event.button === 0){
+        if(event.button === 0) {
             if (this.desenhando) {
-                this.novaLinha(corAtual);
+                if (["lapis", "linha"].includes(this.ferramentaAtual)) {
+                    this.novaLinha(corAtual);
+                } else if (this.ferramentaAtual == "cursor") {
+                    this.criaAreaSelecao();
+                }
             }
 
             this.desenhando = false;
@@ -86,10 +129,12 @@ class Desenho {
     }
 
     mouseSaiu() {
-        if( this.ferramentaAtual == "linha" && this.desenhando){
+        if(this.ferramentaAtual == "linha" && this.desenhando){
             this.novaLinha(corAtual);
         }
-        this.desenhando = false;   
+
+        this.desenhando = false;
+        this.movendoAreaSelecionada = false;  
         this.mouseNaTela = false;
     }
 
@@ -97,11 +142,7 @@ class Desenho {
         this.mouseNaTela = true;
     }
 
-    desenharLinhaTemporaria(corAtual) {
-        if(!(this.ferramentaAtual == "linha" && this.desenhando)){
-            return;
-        }
-           
+    desenharLinhaTemporaria(corAtual) {     
         this.ctx.lineWidth = this.larguraLinha;
         this.ctx.lineCap = 'round';
         
@@ -136,14 +177,14 @@ class Desenho {
         }
     }
     desenharBorracha() {
-        if (!(this.ferramentaAtual == "borracha" && this.mouseNaTela)) {
+        if (!this.mouseNaTela) {
             return;
         }
         
         let x = this.posicaoMouse.x;
         let y = this.posicaoMouse.y;
         this.ctx.fillStyle = `rgba(128, 128, 128, 0.5)`; 
-        this.raio = this.larguraBorracha / 2;
+        this.raio = this.larguraBorracha / (window.devicePixelRatio * 2);
         this.ctx.beginPath();
         this.ctx.arc(x, y, this.raio, (Math.PI / 180)*0, (Math.PI / 180)*360);
         this.ctx.fill();
@@ -165,5 +206,74 @@ class Desenho {
             this.xInicial = this.xFinal;
             this.yInicial = this.yFinal;
         }
+    }
+
+    desenharRetanguloTemporario() {
+        if (this.movendoAreaSelecionada) {
+            return;
+        }
+
+        this.ctx.lineWidth = this.larguraLinha;
+        let largura_retangulo = this.xFinal - this.xInicial;
+        let altura_retangulo = this.yFinal - this.yInicial;
+
+        this.ctx.beginPath();
+        this.ctx.strokeStyle = "rgb(0, 0, 0)";
+        this.ctx.rect(this.xInicial, this.yInicial, largura_retangulo, altura_retangulo);
+        this.ctx.stroke();
+    }
+
+    criaAreaSelecao() {
+        this.areaSelecionada = {
+            x: this.xInicial,
+            y: this.yInicial,
+            largura: this.xFinal - this.xInicial,
+            altura: this.yFinal - this.yInicial
+        }
+
+        while (this.linhasSelecionadas.length > 0) {
+            this.linhasSelecionadas.pop();
+        }
+
+        for (let i = 0; i < this.linhas.length; i++) {
+            let area_min_x = Math.min(this.areaSelecionada.x, this.areaSelecionada.x + this.areaSelecionada.largura);
+            let area_max_x = Math.max(this.areaSelecionada.x, this.areaSelecionada.x + this.areaSelecionada.largura);
+            let area_min_y = Math.min(this.areaSelecionada.y, this.areaSelecionada.y + this.areaSelecionada.altura);
+            let area_max_y = Math.max(this.areaSelecionada.y, this.areaSelecionada.y + this.areaSelecionada.altura);
+
+            let projecao_area_x = [area_min_x, area_max_x];
+            let projecao_area_y = [area_min_y, area_max_y];
+
+            let linha_min_x = Math.min(this.linhas[i].xInicial, this.linhas[i].xFinal);
+            let linha_max_x = Math.max(this.linhas[i].xInicial, this.linhas[i].xFinal);
+            let linha_min_y = Math.min(this.linhas[i].yInicial, this.linhas[i].yFinal);
+            let linha_max_y = Math.max(this.linhas[i].yInicial, this.linhas[i].yFinal);
+
+            let projecao_linha_x = [linha_min_x, linha_max_x];
+            let projecao_linha_y = [linha_min_y, linha_max_y];
+
+            let linha_dentro_area_x = ((projecao_linha_x[0] >= projecao_area_x[0] && projecao_linha_x[0] <= projecao_area_x[1]) && (projecao_linha_x[1] >= projecao_area_x[0] && projecao_linha_x[1] <= projecao_area_x[1]));
+            let linha_dentro_area_y = ((projecao_linha_y[0] >= projecao_area_y[0] && projecao_linha_y[0] <= projecao_area_y[1]) && (projecao_linha_y[1] >= projecao_area_y[0] && projecao_linha_y[1] <= projecao_area_y[1]));
+
+            if (linha_dentro_area_x && linha_dentro_area_y) {
+                this.linhasSelecionadas.push(i);
+            }
+        }
+    }
+
+    desenharAreaSelecao() {
+        if (this.ferramentaAtual != "cursor") {
+            this.areaSelecionada = {
+                x: 0,
+                y: 0,
+                largura: 0,
+                altura: 0
+            }
+        }
+
+        this.ctx.beginPath();
+        this.ctx.strokeStyle = "rgb(0, 0, 0)";
+        this.ctx.rect(this.areaSelecionada.x, this.areaSelecionada.y, this.areaSelecionada.largura, this.areaSelecionada.altura);
+        this.ctx.stroke();
     }
 }

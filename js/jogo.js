@@ -20,10 +20,11 @@ function canvas() {
     let ctx = canvasJogo.getContext('2d'); // Contexto do Canvas
     canvasJogo.height = 5000; 
     canvasJogo.width = 10000;
+    const retangulo = canvasJogo.getBoundingClientRect();
 
     //provisório
-    adicionarJogador(100, 100); // X e o Y devem poder ser escolhidos no menu
-    adicionarJogador(300, 300);
+    adicionarJogador(100 - retangulo.left, 100 - retangulo.top); // X e o Y devem poder ser escolhidos no menu
+    adicionarJogador(300 - retangulo.left, 300 - retangulo.top);
 
     const desenho = new Desenho(ctx);
     canvasJogo.addEventListener('mousedown', (event) => desenho.mouseClick(event, ferramentaAtual, canvasJogo));
@@ -51,10 +52,18 @@ function canvas() {
             jogador.desenharJogador();
         }
         desenho.desenharLinhasExistentes();
-        desenho.desenharBorracha();   
-        desenho.desenharLinhaTemporaria(corAtual);
+        desenho.desenharAreaSelecao();
+
+        if (desenho.ferramentaAtual == "borracha") {
+            desenho.desenharBorracha();
+        }
+
         if (desenho.desenhando) {
-            desenho.desenharLinhaTemporaria(corAtual);
+            if (desenho.ferramentaAtual == "linha") {
+                desenho.desenharLinhaTemporaria(corAtual);
+            } else if (desenho.ferramentaAtual == "cursor") {
+                desenho.desenharRetanguloTemporario();
+            }
         }
        
         requestAnimationFrame(game);
@@ -65,10 +74,11 @@ function canvas() {
 let ferramentaAtual;
 let corAtual;
 let statusTempo;
-function inicializa_selecionados() {
+function inicializa_hud() {
     ferramentaAtual = document.querySelector("input[name='ferramenta']:checked").value;
     corAtual = document.querySelector("input[name='cor']:checked").value;
     atualiza('status'); // Aplique o status inicial
+    atualiza("ferramenta");
 }
 
 function atualiza(variavel) {
