@@ -212,11 +212,11 @@ class Desenho {
                 yFinal: this.yFinal,
                 corLinha: corAtual
             });
-        }
 
-        if (this.ferramentaAtual == "lapis") {
-            this.xInicial = this.xFinal;
-            this.yInicial = this.yFinal;
+            if (this.ferramentaAtual == "lapis") {
+                this.xInicial = this.xFinal;
+                this.yInicial = this.yFinal;
+            }
         }
     }
 
