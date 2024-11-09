@@ -14,7 +14,7 @@ class Desenho {
         this.movendoAreaSelecionada = false;
         this.larguraLinha = 4;
         this.tamanhoMinimoLinha = 1.5;
-        this.tamanhoMinimoLapis = 10;
+        this.anguloLinha = NaN;
         this.larguraBorracha = 40;
         this.posicaoMouse = { x: 0, y: 0 }; 
         this.mouseNaTela = false;
@@ -73,7 +73,7 @@ class Desenho {
     }
 
     mousePressionado(event, ferramentaAtual, corAtual, canvasJogo) {
-        if(!this.mouseNaTela) {
+        if(!(this.mouseNaTela && this.desenhando)) {
             return;
         }
 
@@ -87,30 +87,42 @@ class Desenho {
         this.xFinal = this.posicaoMouse.x;
         this.yFinal = this.posicaoMouse.y;
 
-        if (this.desenhando) {        
-            if(this.ferramentaAtual == "lapis") {
-                this.novaLinha(corAtual);
-            } else if (this.ferramentaAtual == 'borracha') {
-                this.linhas = this.linhas.filter(linha => !this.linhaColisao(linha.xInicial, linha.yInicial, linha.xFinal, linha.yFinal, this.xFinal, this.yFinal));    // filter -> remove as linhas que não atenderam a condição
-            } else if (this.ferramentaAtual == "mover") {
-                window.scrollBy(this.xInicial - this.xFinal, this.yInicial - this.yFinal);
-            } else if (this.ferramentaAtual == "cursor" && this.movendoAreaSelecionada) {
-                let offset_x = this.xFinal - this.xInicial;
-                let offset_y = this.yFinal - this.yInicial;
+        if(this.ferramentaAtual == "lapis") {
+            const distancia = Math.sqrt(Math.pow(this.xFinal - this.xInicial, 2) + Math.pow(this.yFinal - this.yInicial, 2));
+            let angulo_novo;
+            if (distancia >= this.tamanhoMinimoLinha) {
+                const cateto_oposto = Math.abs(this.xFinal - this.xInicial);
+                angulo_novo = Math.asin(distancia/cateto_oposto) * 180/Math.PI;
 
-                this.areaSelecionada.x += offset_x;
-                this.areaSelecionada.y += offset_y;
-
-                for (let i of this.linhasSelecionadas) {
-                    this.linhas[i].xInicial += offset_x;
-                    this.linhas[i].yInicial += offset_y;
-                    this.linhas[i].xFinal += offset_x;
-                    this.linhas[i].yFinal += offset_y;
-                }
-
-                this.xInicial = this.xFinal;
-                this.yInicial = this.yFinal;
+                if (this.anguloLinha == NaN) {
+                    this.anguloLinha = angulo_novo;
+                }   
             }
+
+            if (angulo_novo != this.anguloLinha && this.anguloLinha != NaN) {
+                this.novaLinha(corAtual);
+                this.anguloLinha = NaN;
+            }
+        } else if (this.ferramentaAtual == 'borracha') {
+            this.linhas = this.linhas.filter(linha => !this.linhaColisao(linha.xInicial, linha.yInicial, linha.xFinal, linha.yFinal, this.xFinal, this.yFinal));    // filter -> remove as linhas que não atenderam a condição
+        } else if (this.ferramentaAtual == "mover") {
+            window.scrollBy(this.xInicial - this.xFinal, this.yInicial - this.yFinal);
+        } else if (this.ferramentaAtual == "cursor" && this.movendoAreaSelecionada) {
+            let offset_x = this.xFinal - this.xInicial;
+            let offset_y = this.yFinal - this.yInicial;
+
+            this.areaSelecionada.x += offset_x;
+            this.areaSelecionada.y += offset_y;
+
+            for (let i of this.linhasSelecionadas) {
+                this.linhas[i].xInicial += offset_x;
+                this.linhas[i].yInicial += offset_y;
+                this.linhas[i].xFinal += offset_x;
+                this.linhas[i].yFinal += offset_y;
+            }
+
+            this.xInicial = this.xFinal;
+            this.yInicial = this.yFinal;
         }
     }
 
@@ -191,10 +203,8 @@ class Desenho {
     }
 
     novaLinha(corAtual) {
-        let tamanho_minimo = (this.ferramentaAtual == "lapis") ? this.tamanhoMinimoLapis : this.tamanhoMinimoLinha; 
-
         const distancia = Math.sqrt(Math.pow(this.xFinal - this.xInicial, 2) + Math.pow(this.yFinal - this.yInicial, 2));
-        if (distancia >= tamanho_minimo) {
+        if (distancia >= this.tamanhoMinimoLinha) {
             this.linhas.push({
                 xInicial: this.xInicial,
                 yInicial: this.yInicial,
