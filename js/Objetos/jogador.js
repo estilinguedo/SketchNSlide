@@ -13,8 +13,6 @@ class Jogador{
             this.aceleracaoGravidade = 10; // Opção no menu?
             this.massa = 5; // Opção no menu
             this.peso = this.massa * this.aceleracaoGravidade;
-            //this.nerfVelocidadeY = 50;
-            //this.nerfVelocidadeX = 30;
             // Normal
             this.normal = 0; // Opção no menu
             // Atrito
@@ -71,8 +69,6 @@ class Jogador{
     gravidade(dt) {
         this.aceleracaoY += (this.peso - this.normal) * dt;      
         this.y += this.aceleracaoY;
-
-        //this.x +=  this.aceleracaoX / this.nerfVelocidadeX;
     }
     verificarColisao(desenho){
         let colisoes = [];
@@ -154,6 +150,8 @@ class Jogador{
         this.jogando = true;
         this.x = this.xInicial;
         this.y = this.yInicial;
+        this.aceleracaoX = 0;
+        this.aceleracaoY = 0;
     }
     stop() {
         this.jogando = false;

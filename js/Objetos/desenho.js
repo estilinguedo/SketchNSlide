@@ -191,8 +191,10 @@ class Desenho {
     }
 
     novaLinha(corAtual) {
+        let tamanho_minimo = (this.ferramentaAtual == "lapis") ? this.tamanhoMinimoLapis : this.tamanhoMinimoLinha; 
+
         const distancia = Math.sqrt(Math.pow(this.xFinal - this.xInicial, 2) + Math.pow(this.yFinal - this.yInicial, 2));
-        if (distancia >= this.tamanhoMinimoLinha) {
+        if (distancia >= tamanho_minimo) {
             this.linhas.push({
                 xInicial: this.xInicial,
                 yInicial: this.yInicial,
