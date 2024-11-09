@@ -13,8 +13,8 @@ class Jogador{
             this.aceleracaoGravidade = 10; // Opção no menu?
             this.massa = 5; // Opção no menu
             this.peso = this.massa * this.aceleracaoGravidade;
-            this.nerfVelocidadeY = 50;
-            this.nerfVelocidadeX = 30;
+            //this.nerfVelocidadeY = 50;
+            //this.nerfVelocidadeX = 30;
             // Normal
             this.normal = 0; // Opção no menu
             // Atrito
@@ -45,10 +45,10 @@ class Jogador{
     }
 
 
-    desenharJogador() {   
+    desenharJogador(dt) {   
         // O jogador é redesenhado todo frame
         if (this.jogando) {
-            this.gravidade();
+            this.gravidade(dt);
         }
         this.ctx.save();
         this.ctx.translate(this.x + this.larguraSprite / 2, this.y + this.alturaSprite / 2);
@@ -68,10 +68,11 @@ class Jogador{
             this.ctx.fill();
         }
     }
-    gravidade() {
-        this.aceleracaoY = this.peso - this.normal;      
-        this.y += this.aceleracaoY / this.nerfVelocidadeY;
-        this.x +=  this.aceleracaoX / this.nerfVelocidadeX;
+    gravidade(dt) {
+        this.aceleracaoY += (this.peso - this.normal) * dt;      
+        this.y += this.aceleracaoY;
+
+        //this.x +=  this.aceleracaoX / this.nerfVelocidadeX;
     }
     verificarColisao(desenho){
         let colisoes = [];
@@ -158,6 +159,8 @@ class Jogador{
         this.jogando = false;
         this.x = this.xInicial;
         this.y = this.yInicial;
+        this.aceleracaoX = 0;
+        this.aceleracaoY = 0;
     }
 
 }

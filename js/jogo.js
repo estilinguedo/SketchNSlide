@@ -1,6 +1,16 @@
 let jogadores = [];
 let bandeiras = [];
 
+let hora_anterior = Date.now();
+let delta_time = 0;
+setInterval(function() {
+    let hora_atual = Date.now()
+    delta_time = (hora_atual - hora_anterior) / 1000;
+    hora_anterior = hora_atual;
+
+    //console.log(delta_time);
+}, 0);
+
 
 function adicionarJogador(x, y) {
     let canvasJogo = document.getElementById("canvas-jogo");
@@ -49,7 +59,7 @@ function canvas() {
                 jogador.jogando = false;
             }
             jogador.verificarColisao(desenho);
-            jogador.desenharJogador();
+            jogador.desenharJogador(delta_time);
         }
         desenho.desenharLinhasExistentes();
         desenho.desenharAreaSelecao();
