@@ -69,6 +69,9 @@ function canvas() {
         }
 
         if (desenho.desenhando) {
+            if (desenho.ferramentaAtual == "lapis") {
+                desenho.desenharLinhaTemporaria("preto");
+            }
             if (desenho.ferramentaAtual == "linha") {
                 desenho.desenharLinhaTemporaria(corAtual);
             } else if (desenho.ferramentaAtual == "cursor") {

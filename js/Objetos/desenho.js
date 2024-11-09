@@ -89,17 +89,17 @@ class Desenho {
 
         if(this.ferramentaAtual == "lapis") {
             const distancia = Math.sqrt(Math.pow(this.xFinal - this.xInicial, 2) + Math.pow(this.yFinal - this.yInicial, 2));
-            let angulo_novo;
+            let angulo_novo = 0;
             if (distancia >= this.tamanhoMinimoLinha) {
                 const cateto_oposto = Math.abs(this.xFinal - this.xInicial);
-                angulo_novo = Math.asin(distancia/cateto_oposto) * 180/Math.PI;
+                angulo_novo = Math.asin(cateto_oposto/distancia) * 180/Math.PI;
 
-                if (this.anguloLinha == NaN) {
+                if (isNaN(this.anguloLinha)) {
                     this.anguloLinha = angulo_novo;
                 }   
             }
 
-            if (angulo_novo != this.anguloLinha && this.anguloLinha != NaN) {
+            if (Math.abs(angulo_novo - this.anguloLinha) > 1 && this.anguloLinha != NaN) {
                 this.novaLinha(corAtual);
                 this.anguloLinha = NaN;
             }
@@ -160,7 +160,7 @@ class Desenho {
         
         let cor_linha = "rgb(";
         for (let cor of ["vermelho", "verde", "azul"]) {
-            cor_linha += (cor == corAtual) ? "128," : "0,";
+            cor_linha += (cor == corAtual) ? "128," : "64,";
         }
         this.ctx.strokeStyle = cor_linha.substring(0, cor_linha.length - 1) + ")";
         
