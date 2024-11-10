@@ -20,17 +20,49 @@ class Desenho {
         this.mouseNaTela = false;
     }
 
-    linhaColisao(xInicial, yInicial, xFinal, yFinal, posX, posY) {
-        const buffer = this.larguraBorracha / (window.devicePixelRatio * 2);
-        const dentroSegmento = (px, py, x0, y0, x1, y1) => {
-            const minX = Math.min(x0, x1);
-            const maxX = Math.max(x0, x1);
-            const minY = Math.min(y0, y1);
-            const maxY = Math.max(y0, y1);
-            return px >= minX - buffer  && px <= maxX + buffer && py >= minY - buffer && py <= maxY + buffer; // Se a posição do mouse estiver dentro da linha
-        };
+    colisaoBorracha(linha) {
+        const raio = this.larguraBorracha / (window.devicePixelRatio * 2);
 
-        return dentroSegmento(posX, posY, xInicial, yInicial, xFinal, yFinal);
+        for (let x = this.xFinal - raio; x <= this.xFinal + raio; x++) {
+            for (let y = this.yFinal - raio; y <= this.yFinal + raio; y++) {
+                if((Math.sqrt(Math.pow(x - this.xFinal, 2) + Math.pow(y - this.yFinal, 2)) > raio)) {
+                    continue;
+                } else if (x < Math.min(linha.xInicial, linha.xFinal) || x > Math.max(linha.xInicial, linha.xFinal)) {
+                    continue;
+                } else if (y < Math.min(linha.yInicial, linha.yFinal) || y > Math.max(linha.yInicial, linha.yFinal)) {
+                    continue;
+                }
+
+                let a, b;
+                if (linha.xFinal - linha.xInicial == 0) {
+                    a = y/x;
+                    b = 0;
+                } else {
+                    a = (linha.yFinal - linha.yInicial) / (linha.xFinal - linha.xInicial);
+                    b = (linha.yInicial * linha.xFinal - linha.yFinal * linha.xInicial) / ((linha.xFinal - linha.xInicial));
+                }
+
+                if (y - this.larguraLinha / 2 < a * x + b && a * x + b < y + this.larguraLinha / 2) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+    
+    desenharBorracha() {
+        if (!this.mouseNaTela) {
+            return;
+        }
+        
+        let x = this.posicaoMouse.x;
+        let y = this.posicaoMouse.y;
+        this.ctx.fillStyle = `rgba(128, 128, 128, 0.5)`; 
+        const raio = this.larguraBorracha / (window.devicePixelRatio * 2);
+        this.ctx.beginPath();
+        this.ctx.arc(x, y, raio, (Math.PI / 180)*0, (Math.PI / 180)*360);
+        this.ctx.fill();
     }
 
     mouseClick(event, ferramentaAtual, canvasJogo) {
@@ -47,7 +79,7 @@ class Desenho {
     
 
         if (this.ferramentaAtual == 'borracha') {
-            this.linhas = this.linhas.filter(linha => !this.linhaColisao(linha.xInicial, linha.yInicial, linha.xFinal, linha.yFinal, posX, posY));
+            this.linhas = this.linhas.filter(linha => !this.colisaoBorracha(linha));
             return;
         }
 
@@ -73,7 +105,7 @@ class Desenho {
     }
 
     mousePressionado(event, ferramentaAtual, corAtual, canvasJogo) {
-        if(!(this.mouseNaTela && this.desenhando)) {
+        if(!(this.mouseNaTela)) {
             return;
         }
 
@@ -86,6 +118,10 @@ class Desenho {
         this.ferramentaAtual = ferramentaAtual;    
         this.xFinal = this.posicaoMouse.x;
         this.yFinal = this.posicaoMouse.y;
+
+        if (!this.desenhando) {
+            return;
+        }
 
         if(this.ferramentaAtual == "lapis") {
             const distancia = Math.sqrt(Math.pow(this.xFinal - this.xInicial, 2) + Math.pow(this.yFinal - this.yInicial, 2));
@@ -104,7 +140,7 @@ class Desenho {
                 this.anguloLinha = NaN;
             }
         } else if (this.ferramentaAtual == 'borracha') {
-            this.linhas = this.linhas.filter(linha => !this.linhaColisao(linha.xInicial, linha.yInicial, linha.xFinal, linha.yFinal, this.xFinal, this.yFinal));    // filter -> remove as linhas que não atenderam a condição
+            this.linhas = this.linhas.filter(linha => !this.colisaoBorracha(linha));    // filter -> remove as linhas que não atenderam a condição
         } else if (this.ferramentaAtual == "mover") {
             window.scrollBy(this.xInicial - this.xFinal, this.yInicial - this.yFinal);
         } else if (this.ferramentaAtual == "cursor" && this.movendoAreaSelecionada) {
@@ -187,19 +223,6 @@ class Desenho {
             this.ctx.stroke();
             
         }
-    }
-    desenharBorracha() {
-        if (!this.mouseNaTela) {
-            return;
-        }
-        
-        let x = this.posicaoMouse.x;
-        let y = this.posicaoMouse.y;
-        this.ctx.fillStyle = `rgba(128, 128, 128, 0.5)`; 
-        this.raio = this.larguraBorracha / (window.devicePixelRatio * 2);
-        this.ctx.beginPath();
-        this.ctx.arc(x, y, this.raio, (Math.PI / 180)*0, (Math.PI / 180)*360);
-        this.ctx.fill();
     }
 
     novaLinha(corAtual) {
