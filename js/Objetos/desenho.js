@@ -27,9 +27,9 @@ class Desenho {
             for (let y = this.yFinal - raio; y <= this.yFinal + raio; y++) {
                 if((Math.sqrt(Math.pow(x - this.xFinal, 2) + Math.pow(y - this.yFinal, 2)) > raio)) {
                     continue;
-                } else if (x < Math.min(linha.xInicial, linha.xFinal) || x > Math.max(linha.xInicial, linha.xFinal)) {
+                } else if (x < Math.min(linha.xInicial, linha.xFinal) - this.larguraLinha / 2 || x > Math.max(linha.xInicial, linha.xFinal) + this.larguraLinha / 2) {
                     continue;
-                } else if (y < Math.min(linha.yInicial, linha.yFinal) || y > Math.max(linha.yInicial, linha.yFinal)) {
+                } else if (y < Math.min(linha.yInicial, linha.yFinal) - this.larguraLinha / 2 || y > Math.max(linha.yInicial, linha.yFinal) + this.larguraLinha / 2) {
                     continue;
                 }
 
@@ -253,7 +253,7 @@ class Desenho {
         let altura_retangulo = this.yFinal - this.yInicial;
 
         this.ctx.beginPath();
-        this.ctx.strokeStyle = "rgb(0, 0, 0)";
+        this.ctx.strokeStyle = "rgb(64, 64, 64)";
         this.ctx.rect(this.xInicial, this.yInicial, largura_retangulo, altura_retangulo);
         this.ctx.stroke();
     }
