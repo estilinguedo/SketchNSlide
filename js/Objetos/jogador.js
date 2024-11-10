@@ -8,23 +8,23 @@ class Jogador{
         this.x = this.xInicial;
         this.y = this.yInicial;
 
-        //Forças 
-            // Peso
-            this.aceleracaoGravidade = 10; // Opção no menu?
-            this.massa = 5; // Opção no menu
-            this.peso = this.massa * this.aceleracaoGravidade;
-            // Normal
-            this.normal = 0; // Opção no menu
-            // Atrito
-            this.µAzul = 1.4;
-            this.µVermelho = 1.2;
-            this.µVerde = 1.8;
-            // Aceleração horizontal
-            this.aceleracaoX = 0;
-            // Aceleração vertical
-            this.aceleracaoY = 0;
+        // Peso
+        this.aceleracaoGravidade = 10; // Opção no menu?
+        this.massa = 5; // Opção no menu
+        this.peso = this.massa * this.aceleracaoGravidade;
 
+        // Aceleração horizontal
+        this.vetorX = {
+            aceleracao: 2,
+            direcao: 1
+        }
 
+        // Aceleração vertical
+        this.vetorY = {
+            aceleracao: 0,
+            direcao: 1
+        }
+            
         // Tamanho
         this.larguraSprite = 70; // Opção no menu?
         this.alturaSprite = 70;
@@ -35,6 +35,7 @@ class Jogador{
             { x: this.x + this.larguraSprite - 10, y: this.y + this.alturaSprite -10, lugar:'BaseDir'},    
             { x: this.x + 25, y: this.y + 20, lugar:'Cabeca'} 
         ];
+
         // Sprite
         this.jogadorSprite = new Image();
         this.jogadorSprite.src ="img/JogadorSprites/cinza.png";
@@ -54,6 +55,7 @@ class Jogador{
         this.ctx.drawImage(this.jogadorSprite, -this.larguraSprite / 2, -this.alturaSprite / 2, this.larguraSprite, this.alturaSprite);
         this.ctx.restore();
 
+        //Remover
         // Hitbox temporário
         this.ctx.strokeStyle = 'red'; 
         this.ctx.lineWidth = 2;  
@@ -67,6 +69,7 @@ class Jogador{
         }
     }
     gravidade(dt) {
+        
         this.aceleracaoY += (this.peso - this.normal) * dt;      
         this.y += this.aceleracaoY;
     }
