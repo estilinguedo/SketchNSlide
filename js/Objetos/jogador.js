@@ -40,6 +40,9 @@ class Jogador{
 
             atualizaChao: function(jogador, linhas, largura_linha) {
                 jogador.pontoColisao.chao = null;
+                if (jogador.vetorY.direcao == -1) {
+                    return;
+                }
 
                 for (let linha of linhas) {
                     if (jogador.pontoColisao.x < Math.min(linha.xInicial, linha.xFinal) - largura_linha / 2 || jogador.pontoColisao.x > Math.max(linha.xInicial, linha.xFinal) + largura_linha / 2) {
@@ -65,7 +68,7 @@ class Jogador{
                         let cateto_adjascente = Math.min(linha.yFinal, linha.yInicial) - Math.min(linha.yFinal, linha.yInicial);
                         let rotacao_linha = (linha.yFinal - linha.yInicial) * (linha.xFinal - linha.xInicial) / Math.abs(linha.xFinal - linha.xInicial);
 
-                        if (ponto.y < jogador.y) {
+                        if (ponto.y < jogador.y + jogador.alturaSprite) {
                             continue;
                         }
                         
@@ -101,18 +104,6 @@ class Jogador{
         this.ctx.scale(this.vetorX.direcao, 1);
         this.ctx.drawImage(this.jogadorSprite, -this.larguraSprite / 2, -this.alturaSprite / 2, this.larguraSprite, this.alturaSprite);
         this.ctx.restore();
-
-        //Remover
-        // Hitbox temporário
-        this.ctx.strokeStyle = 'red'; 
-        this.ctx.lineWidth = 2;  
-        this.ctx.strokeRect(this.x, this.y, this.larguraSprite, this.alturaSprite);
-
-
-        this.ctx.fillStyle = 'blue';  
-        this.ctx.beginPath();
-        this.ctx.arc(this.pontoColisao.x, this.pontoColisao.y, 5, 0, Math.PI * 2);  
-        this.ctx.fill();
     }
     gravidade(dt, linhas, largura_linha) {
         this.pontoColisao.atualizaHitbox(this);
