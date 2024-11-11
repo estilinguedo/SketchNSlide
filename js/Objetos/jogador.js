@@ -303,15 +303,29 @@ class Jogador{
         this.jogando = true;
         this.x = this.xInicial;
         this.y = this.yInicial;
-        this.aceleracaoX = 0;
-        this.aceleracaoY = 0;
+
+        this.vetorX = {
+            velocidade: 2,
+            direcao: 1
+        }
+        this.vetorY = {
+            velocidade: 0,
+            direcao: 1
+        }
     }
     stop() {
         this.jogando = false;
         this.x = this.xInicial;
         this.y = this.yInicial;
-        this.aceleracaoX = 0;
-        this.aceleracaoY = 0;
+
+        this.vetorX = {
+            velocidade: 2,
+            direcao: 1
+        }
+        this.vetorY = {
+            velocidade: 0,
+            direcao: 1
+        }
     }
 
 }
