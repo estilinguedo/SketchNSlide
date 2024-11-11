@@ -11,7 +11,7 @@ class Jogador{
 
         // Peso
         this.aceleracaoGravidade = 50; // Opção no menu?
-        this.massa = 5; // Opção no menu
+        this.massa = 70; // Opção no menu
         this.peso = this.massa * this.aceleracaoGravidade;
 
         // Aceleração horizontal
@@ -26,8 +26,7 @@ class Jogador{
             direcao: 1
         }
 
-        this.rotacao = 0;
-        this.velocidade_angular = 0;
+        this.escorregando = false;
             
         // Tamanho
         this.larguraSprite = 70; // Opção no menu?
@@ -44,8 +43,6 @@ class Jogador{
 
                 for (let linha of linhas) {
                     if (jogador.pontoColisao.x < Math.min(linha.xInicial, linha.xFinal) - largura_linha / 2 || jogador.pontoColisao.x > Math.max(linha.xInicial, linha.xFinal) + largura_linha / 2) {
-                        continue;
-                    } if (jogador.pontoColisao.y > Math.max(linha.yInicial, linha.yFinal) + 2) {
                         continue;
                     }
 
@@ -64,10 +61,14 @@ class Jogador{
                     };
                     if (jogador.pontoColisao.chao == null || ponto.y < jogador.pontoColisao.chao.coordenadas.y) {
                         let hipotenusa = Math.sqrt(Math.pow(linha.xFinal - linha.xInicial, 2) + Math.pow(linha.yFinal - linha.yInicial, 2));
-                        let cateto_oposto = Math.abs(linha.xFinal - linha.xInicial);
-                        let cateto_adjascente = Math.abs(linha.yFinal - linha.yInicial);
-                        let rotacao_linha = (linha.yFinal - linha.yInicial) * (linha.xFinal - linha.xInicial) / Math.abs(linha.xFinal - linha.xInicial); 
+                        let cateto_oposto = Math.max(linha.xFinal, linha.xInicial) - Math.min(linha.xFinal, linha.xInicial);
+                        let cateto_adjascente = Math.min(linha.yFinal, linha.yInicial) - Math.min(linha.yFinal, linha.yInicial);
+                        let rotacao_linha = (linha.yFinal - linha.yInicial) * (linha.xFinal - linha.xInicial) / Math.abs(linha.xFinal - linha.xInicial);
 
+                        if (ponto.y < jogador.y) {
+                            continue;
+                        }
+                        
                         jogador.pontoColisao.chao = {
                             coordenadas: ponto,
                             seno_inclinacao: cateto_oposto/hipotenusa,
@@ -97,7 +98,7 @@ class Jogador{
         }
         this.ctx.save();
         this.ctx.translate(this.x + this.larguraSprite / 2, this.y + this.alturaSprite / 2);
-        this.ctx.rotate(this.rotacao);
+        this.ctx.scale(this.vetorX.direcao, 1);
         this.ctx.drawImage(this.jogadorSprite, -this.larguraSprite / 2, -this.alturaSprite / 2, this.larguraSprite, this.alturaSprite);
         this.ctx.restore();
 
@@ -117,7 +118,8 @@ class Jogador{
         this.pontoColisao.atualizaHitbox(this);
         this.pontoColisao.atualizaChao(this, linhas, largura_linha);
 
-        if (this.pontoColisao.chao == null || this.y + this.alturaSprite + this.vetorY.velocidade * this.vetorY.direcao < this.pontoColisao.chao.coordenadas.y) {
+        if (this.pontoColisao.chao == null || this.y + this.alturaSprite + this.vetorY.velocidade * this.vetorY.direcao < this.pontoColisao.chao.coordenadas.y - largura_linha / 2) {
+            this.escorregando = false;
             this.vetorY.velocidade += this.aceleracaoGravidade * this.vetorY.direcao * dt;
 
             if (this.vetorY.velocidade < 0) {
@@ -126,9 +128,9 @@ class Jogador{
             }
         } else {
             let mod_velocidade = (this.pontoColisao.chao.cor == "azul") ? 1 : 2;
-            if (this.y + this.alturaSprite + this.vetorY.velocidade * this.vetorY.direcao >= this.pontoColisao.chao.coordenadas.y) {
+            let atravessou_chao = (this.y + this.alturaSprite + this.vetorY.velocidade * this.vetorY.direcao > this.pontoColisao.chao.coordenadas.y + largura_linha / 2);
+            if (atravessou_chao) {
                 this.y = this.pontoColisao.chao.coordenadas.y - this.alturaSprite;
-                this.vetorX.velocidade += this.vetorY.velocidade * this.pontoColisao.chao.seno_inclinacao * dt * mod_velocidade;
             }
             
             if (this.pontoColisao.chao.cor == "verde") {
@@ -141,7 +143,14 @@ class Jogador{
                 } else {
                     this.vetorX.direcao = 1;
                 }
-            } else {        
+            } else {      
+                if (atravessou_chao && !this.escorregando) {
+                    this.escorregando = true;
+
+                    this.vetorX.velocidade = this.vetorX.velocidade * this.pontoColisao.chao.seno_inclinacao;
+                    this.vetorY.velocidade = this.vetorY.velocidade * this.pontoColisao.chao.cosseno_inclinacao;
+                }
+
                 if (this.vetorX.direcao * this.pontoColisao.chao.rotacao < 0) {
                     this.vetorX.velocidade -= this.aceleracaoGravidade * this.pontoColisao.chao.seno_inclinacao * dt * mod_velocidade;
                 } else {
@@ -153,7 +162,7 @@ class Jogador{
                     this.vetorX.velocidade *= -1;
                 } 
    
-                this.vetorY.velocidade = this.aceleracaoGravidade * this.pontoColisao.chao.cosseno_inclinacao * dt * mod_velocidade;
+                this.vetorY.velocidade += this.aceleracaoGravidade * this.pontoColisao.chao.cosseno_inclinacao * dt * mod_velocidade;
             }
         }
 
