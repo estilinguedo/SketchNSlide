@@ -32,6 +32,25 @@ class Desenho {
                 } else if (y < Math.min(linha.yInicial, linha.yFinal) - this.larguraLinha / 2 || y > Math.max(linha.yInicial, linha.yFinal) + this.larguraLinha / 2) {
                     continue;
                 }
+                /*
+                y = ax + b
+
+                y1 = ax1 + b
+                y2 = ax2 + b
+                    y2 - y1 = a(x2 - x1)
+                a = (y2 - y1) / (x2 - x1)
+
+                y1 = (y2 - y1)x1 / (x2 - x1) + b
+                    y1(x2 - x1) = (y2 - y1)x1 + b(x2 - x1)
+                b(x2 - x1) = y1x2 - y1x1 - x1y2 + y1x1
+                b(x2 - x1) = y1x2 - x1y2
+                b = (y1x2 - x1y2) / (x2 - x1)
+
+                |
+                |
+                |
+                |
+                */
 
                 let a, b;
                 if (linha.xFinal - linha.xInicial == 0) {
