@@ -53,7 +53,7 @@ function canvas() {
         }
         for (const jogador of jogadores) { // Pausa o jogo
             jogador.jogando = (statusTempo === 'play');
-            // jogador.verificarColisao(desenho);
+            //jogador.verificarColisao(desenho);
             jogador.desenharJogador(delta_time, desenho.linhas, desenho.larguraLinha);
         }
         desenho.desenharLinhasExistentes();
