@@ -32,9 +32,8 @@ function canvas() {
     canvasJogo.width = 10000;
     retangulo = canvasJogo.getBoundingClientRect();
 
-    //provisório
-    adicionarJogador(100 - retangulo.left, 100 - retangulo.top); // X e o Y devem poder ser escolhidos no menu
-    adicionarJogador(300 - retangulo.left, 300 - retangulo.top);
+    muda_qtde_player()
+    muda_skin()
 
     const desenho = new Desenho(ctx);
     canvasJogo.addEventListener('mousedown', (event) => desenho.mouseClick(event, ferramentaAtual, canvasJogo));
@@ -145,4 +144,26 @@ function reposicionar_bandeira(){
 
 function clamp(numInicial, minimo, maximo){
     return Math.min(Math.max(numInicial, minimo), maximo);
+}
+// Muda skins
+function muda_skin(){
+    let opcaoSelecionada = document.getElementById("skin-riders").value
+    var cores = ["amarelo","azul","cinza","rosa","verde","vermelho"]
+    if(opcaoSelecionada == "padrao"){
+        jogadores.forEach((jogador,indice) =>  jogador.jogadorSprite.src ="img/JogadorSprites/"+cores[indice]+".png") ;
+    }else if(opcaoSelecionada == "sugoma1"){
+        jogadores.forEach((jogador,indice) =>  jogador.jogadorSprite.src ="img/JogadorSprites/"+"sugoma_"+cores[indice]+".png") ;
+    }else{
+        jogadores.forEach((jogador,indice) =>  jogador.jogadorSprite.src ="img/JogadorSprites/"+"sugoma_novo_"+cores[indice]+".png") ;
+    }
+}
+// Muda quantidades de Playes
+function muda_qtde_player(){
+    let numeroPlayers = document.getElementById("input-riders").value
+    jogadores = []
+    bandeiras = []
+    for (var i = 1; i < parseInt(numeroPlayers)+1; i++) {
+        adicionarJogador(150*i - retangulo.left, 50*i - retangulo.top);
+}
+muda_skin()
 }
