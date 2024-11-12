@@ -113,15 +113,15 @@
 
         <nav id="botoes-tempo" class="tamanho-fixo">
             <span class="tamanho-fixo">
-                <input type="radio" class="tamanho-fixo" name="status" id="play" value="play" onclick="atualiza('status')">
+                <input type="radio" class="tamanho-fixo" name="status" id="play" value="play" onclick="atualiza('status'); toca_musica();">
                 <label for="play" class="container-icone tamanho-fixo"> <span id="icone-play"></span> </label>
             </span>
             <span class="tamanho-fixo">
-                <input type="radio" class="tamanho-fixo" name="status" id="pause" value="pause" onclick="atualiza('status')" checked>
+                <input type="radio" class="tamanho-fixo" name="status" id="pause" value="pause" onclick="atualiza('status'); pausa_musica();" checked>
                 <label for="pause" class="container-icone tamanho-fixo"> <span id="icone-pause"></span> </label>
             </span>
             <span class="tamanho-fixo">
-                <input type="radio" class="tamanho-fixo" name="status" id="stop" value="stop" onclick="atualiza('status')">
+                <input type="radio" class="tamanho-fixo" name="status" id="stop" value="stop" onclick="atualiza('status'); reseta_musica();">
                 <label for="stop" class="container-icone tamanho-fixo"> <span id="icone-stop"></span> </label>
             </span>
         </nav>

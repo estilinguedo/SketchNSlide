@@ -1,3 +1,5 @@
+var audio
+var pausado = false
 function mostra_opcoes() {
     let menu_opcoes = document.getElementById("menu-opcoes");
 
@@ -12,8 +14,24 @@ function puxa_musica() {
     var musica = this.files[0];
     console.log(musica);
     const musica_URL = URL.createObjectURL(musica);
-    var audio = new Audio(musica_URL);
+    audio = new Audio(musica_URL);
 }
 function toca_musica(){
-    audio.play();
+    if (pausado){
+        if (audio.currentTime != audio.duration){
+            audio.play();
+            pausado = false;
+        }
+    } else {
+        audio.currentTime = 0;
+        audio.play();
+    }
+}
+function pausa_musica(){
+    audio.pause();
+    pausado = true;
+}
+function reseta_musica(){
+    audio.currentTime = 0;
+    audio.pause();
 }

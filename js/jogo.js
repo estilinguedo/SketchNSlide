@@ -1,5 +1,6 @@
 let jogadores = [];
 let bandeiras = [];
+var retangulo;
 
 let hora_anterior = Date.now();
 let delta_time = 0;
@@ -10,7 +11,6 @@ setInterval(function() {
 
     //console.log(delta_time);
 }, 0);
-
 
 function adicionarJogador(x, y) {
     let canvasJogo = document.getElementById("canvas-jogo");
@@ -30,7 +30,7 @@ function canvas() {
     let ctx = canvasJogo.getContext('2d'); // Contexto do Canvas
     canvasJogo.height = 5000; 
     canvasJogo.width = 10000;
-    const retangulo = canvasJogo.getBoundingClientRect();
+    retangulo = canvasJogo.getBoundingClientRect();
 
     //provisório
     adicionarJogador(100 - retangulo.left, 100 - retangulo.top); // X e o Y devem poder ser escolhidos no menu
@@ -122,4 +122,27 @@ function aplica_status_novo(valor_novo) {
         } 
     }
     statusTempo = novoStatus;
+}
+
+function reposicionar_bandeira(){
+    var bandeiraEscolhida = parseInt(prompt("Qual bandeira será movida? (número máximo = número de sliders)")) - 1;
+    if ((bandeiraEscolhida <= bandeiras.length-1) && (bandeiraEscolhida >= 0)){
+        var xEscolhido = parseInt(prompt("Qual será a posição x dessa bandeira?")) - retangulo.left;
+        var yEscolhido = parseInt(prompt("Qual será a posição y dessa bandeira?")) - retangulo.top;
+        bandeiras[bandeiraEscolhida].x = clamp(xEscolhido,-retangulo.left,retangulo.width);
+        bandeiras[bandeiraEscolhida].y = clamp(yEscolhido,-retangulo.top,retangulo.height);
+        jogadores[bandeiraEscolhida].xInicial = clamp(xEscolhido,-retangulo.left,retangulo.width);
+        jogadores[bandeiraEscolhida].yInicial = clamp(yEscolhido,-retangulo.top,retangulo.height);
+        jogadores[bandeiraEscolhida].x = clamp(xEscolhido,-retangulo.left,retangulo.width);
+        jogadores[bandeiraEscolhida].y = clamp(yEscolhido,-retangulo.top,retangulo.height);
+    } else {
+        if (confirm("Você inseriu um valor inválido! Deseja tentar novamente?")){
+            reposicionar_bandeira();
+        }
+    }
+    console.log(retangulo);
+}
+
+function clamp(numInicial, minimo, maximo){
+    return Math.min(Math.max(numInicial, minimo), maximo);
 }
