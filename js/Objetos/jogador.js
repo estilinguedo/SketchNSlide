@@ -47,21 +47,18 @@ class Jogador{
                 for (let linha of linhas) {
                     if (jogador.pontoColisao.x < Math.min(linha.xInicial, linha.xFinal) - largura_linha / 2 || jogador.pontoColisao.x > Math.max(linha.xInicial, linha.xFinal) + largura_linha / 2) {
                         continue;
+                    } else if (linha.xFinal - linha.xInicial == 0) {
+                        continue;
                     }
 
-                    let a, b;
-                    if (linha.xFinal - linha.xInicial == 0) {
-                        a = jogador.pontoColisao.y/jogador.pontoColisao.x;
-                        b = 0;
-                    } else {
-                        a = (linha.yFinal - linha.yInicial) / (linha.xFinal - linha.xInicial);
-                        b = (linha.yInicial * linha.xFinal - linha.yFinal * linha.xInicial) / ((linha.xFinal - linha.xInicial));
-                    }
+                    let a = (linha.yFinal - linha.yInicial) / (linha.xFinal - linha.xInicial);
+                    let b = (linha.yInicial * linha.xFinal - linha.yFinal * linha.xInicial) / ((linha.xFinal - linha.xInicial));
 
                     const ponto = {
                         x: jogador.pontoColisao.x,
                         y: a * jogador.pontoColisao.x + b
                     };
+
                     if (jogador.pontoColisao.chao == null || ponto.y < jogador.pontoColisao.chao.coordenadas.y) {
                         let hipotenusa = Math.sqrt(Math.pow(linha.xFinal - linha.xInicial, 2) + Math.pow(linha.yFinal - linha.yInicial, 2));
                         let cateto_oposto = Math.max(linha.xFinal, linha.xInicial) - Math.min(linha.xFinal, linha.xInicial);
@@ -139,7 +136,7 @@ class Jogador{
 
                 if (this.pontoColisao.chao.direcao < 0) {
                     this.vetorX.direcao = -1;
-                } else {
+                } else if (this.pontoColisao.chao.direcao > 0) {
                     this.vetorX.direcao = 1;
                 }
             } else {      
@@ -167,11 +164,6 @@ class Jogador{
         }
 
         this.x += this.vetorX.velocidade * this.vetorX.direcao;
-
-        if (this.vetorY.direcao == -1) {
-            this.y += this.vetorY.velocidade * this.vetorY.direcao;
-            return;
-        }
 
         let linha_atravessada = null;
         for (let linha of linhas) {
