@@ -76,7 +76,7 @@ class Jogador{
                             coordenadas: ponto,
                             seno_inclinacao: cateto_oposto/hipotenusa,
                             cosseno_inclinacao: cateto_adjascente/hipotenusa,
-                            direcao: direcao_linha / Math.abs(direcao_linha),
+                            direcao: direcao_linha,
                             lei_formacao: {
                                 coeficiente_a: a,
                                 coeficiente_b: b
@@ -136,7 +136,12 @@ class Jogador{
                 this.vetorY.velocidade += this.aceleracaoGravidade * 4 * dt;
 
                 this.vetorY.direcao = -1;
-                this.vetorX.direcao = this.pontoColisao.chao.direcao;
+
+                if (this.pontoColisao.chao.direcao < 0) {
+                    this.vetorX.direcao = -1;
+                } else {
+                    this.vetorX.direcao = 1;
+                }
             } else {      
                 if (atravessou_chao_vertical && !this.escorregando) {
                     this.escorregando = true;
@@ -163,9 +168,24 @@ class Jogador{
 
         this.x += this.vetorX.velocidade * this.vetorX.direcao;
 
+        if (this.vetorY.direcao == -1) {
+            this.y += this.vetorY.velocidade * this.vetorY.direcao;
+            return;
+        }
+
         let linha_atravessada = null;
         for (let linha of linhas) {
+            let a, b;
             if (this.pontoColisao.y < Math.min(linha.yInicial, linha.yFinal) - largura_linha / 2 || this.pontoColisao.y > Math.max(linha.yInicial, linha.yFinal) + largura_linha / 2) {
+                continue;
+            } else if (linha.xFinal - linha.xInicial == 0) {
+                continue;
+            } else {
+                a = (linha.yFinal - linha.yInicial) / (linha.xFinal - linha.xInicial);
+                b = (linha.yInicial * linha.xFinal - linha.yFinal * linha.xInicial) / ((linha.xFinal - linha.xInicial));
+            }
+
+            if (a == 0) {
                 continue;
             }
 
@@ -175,15 +195,8 @@ class Jogador{
                 continue;
             }
 
-            let a, b;
-            if (linha.xFinal - linha.xInicial == 0) {
-                continue;
-            } else {
-                a = (linha.yFinal - linha.yInicial) / (linha.xFinal - linha.xInicial);
-                b = (linha.yInicial * linha.xFinal - linha.yFinal * linha.xInicial) / ((linha.xFinal - linha.xInicial));
-            }
-
             let x_interseccao = (this.pontoColisao.y - largura_linha - b) / a;
+            console.log(x_interseccao, a);
             if (x_interseccao < Math.min(this.pontoColisao.x, this.x + this.larguraSprite / 2) - largura_linha / 2 || x_interseccao > Math.max(this.pontoColisao.x, this.x + this.larguraSprite / 2) + largura_linha / 2) {
                 continue;
             }
@@ -203,7 +216,6 @@ class Jogador{
 
         this.y += this.vetorY.velocidade * this.vetorY.direcao;
 
-        console.log(linha_atravessada);
         if (atravessou_chao_horizontal || atravessou_chao_vertical) {
             this.y = this.pontoColisao.chao.lei_formacao.coeficiente_a * (this.x + this.larguraSprite / 2) + this.pontoColisao.chao.lei_formacao.coeficiente_b - this.alturaSprite;
         }
